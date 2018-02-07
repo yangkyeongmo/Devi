@@ -13,6 +13,7 @@ public class CameraControl : MonoBehaviour {
     private float scroll;
     private Camera cam;
     private GameObject player;
+    private bool isPlanetZoomed = false;
     private RaycastHit hit;
     private Ray ray;
 
@@ -25,7 +26,9 @@ public class CameraControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        //Mouse ScrollWhell Control
+        ray = cam.ScreenPointToRay(Input.mousePosition);
+
+        //Mouse ScrollWheel Control
         scroll = Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
         Debug.Log("scroll: " + scroll);
         if (scroll != 0.0f)
@@ -35,12 +38,20 @@ public class CameraControl : MonoBehaviour {
         }
         cam.orthographicSize = Mathf.Clamp(cam.orthographicSize, minZoom, maxZoom);
 
-        //Move Camera to center if size==minZoom and near moon
-        if(cam.orthographicSize == minZoom)
+        //Move Camera to center if moon is clicked
+        if (Physics.Raycast(ray, out hit))
         {
-            if(cam.transform.position.x != player.transform.position.x && cam.transform.position.y != player.transform.position.y)
+            if (hit.collider.name == "mouseHolder" && Input.GetMouseButtonDown(0) && cam.orthographicSize == minZoom)
             {
-                Vector3 diff = player.transform.position - cam.transform.position + new Vector3(0,5,0);
+                isPlanetZoomed = true;
+            }
+        }
+        
+        if (isPlanetZoomed)
+        {
+            if (cam.transform.position.x != player.transform.position.x && cam.transform.position.y != player.transform.position.y)
+            {
+                Vector3 diff = player.transform.position - cam.transform.position + new Vector3(0, 5, 0);
                 cam.transform.position += diff.normalized * clampSpeed;
                 cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, -40);
                 if (cam.transform.position.x < player.transform.position.x + clampMargin && cam.transform.position.x > player.transform.position.x - clampMargin &&
@@ -49,8 +60,13 @@ public class CameraControl : MonoBehaviour {
                     cam.transform.position = player.transform.position + new Vector3(0, 5, -40);
                 }
             }
-        }
 
+            if(cam.transform.position == (player.transform.position + new Vector3(0, 5, -40)))
+            {
+                isPlanetZoomed = false;
+            }
+        }
+            
         //Move Camera Position
         if(Input.GetAxis("Horizontal") > 0.0f)
         {
