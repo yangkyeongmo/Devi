@@ -9,7 +9,8 @@ public class OrbitalMechanics : MonoBehaviour {
     public GameObject largerMass;
 
     public float e;
-    
+
+    private GameObject markerParent;
     private Vector3 first_velocity;
     private bool initialUpdate = true;
     private Vector3 i1, i2, i3;
@@ -29,6 +30,9 @@ public class OrbitalMechanics : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+        markerParent = new GameObject();
+        markerParent.transform.name = "OrbitMarkers";
         //initializing orthogonal vectors
         i1 = new Vector3(1, 0, 0);
         i2 = new Vector3(0, 1, 0);
@@ -87,7 +91,9 @@ public class OrbitalMechanics : MonoBehaviour {
         firstTime = (int)System.Math.Truncate(Time.time / 1);
         if(firstTime == nextTime)
         {
-            Instantiate(marker, transform.position, Quaternion.identity);
+            var i_marker = Instantiate(marker, transform.position, Quaternion.identity);
+            i_marker.transform.parent = markerParent.transform;
+
             nextTime = firstTime + 1;
         }
         initialUpdate = false;
