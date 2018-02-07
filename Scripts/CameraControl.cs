@@ -13,7 +13,7 @@ public class CameraControl : MonoBehaviour {
     private float scroll;
     private Camera cam;
     private GameObject player;
-    private bool isPlanetZoomed = false;
+    private bool isPlayerClicked = false;
     private RaycastHit hit;
     private Ray ray;
 
@@ -43,11 +43,11 @@ public class CameraControl : MonoBehaviour {
         {
             if (hit.collider.name == "mouseHolder" && Input.GetMouseButtonDown(0) && cam.orthographicSize == minZoom)
             {
-                isPlanetZoomed = true;
+                isPlayerClicked = true;
             }
         }
         
-        if (isPlanetZoomed)
+        if (isPlayerClicked)
         {
             if (cam.transform.position.x != player.transform.position.x && cam.transform.position.y != player.transform.position.y)
             {
@@ -63,7 +63,7 @@ public class CameraControl : MonoBehaviour {
 
             if(cam.transform.position == (player.transform.position + new Vector3(0, 5, -40)))
             {
-                isPlanetZoomed = false;
+                isPlayerClicked = false;
             }
         }
             
