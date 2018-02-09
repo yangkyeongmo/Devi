@@ -75,7 +75,7 @@ public class newDivideZones : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             GetSpinnedSphericalMousePosition();
-            //GetSelectedZoneNumber(30 * Mathf.Deg2Rad, 30 * Mathf.Deg2Rad);
+            GetSelectedZoneNumber();
         }
     }
 

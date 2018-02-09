@@ -30,9 +30,9 @@ public class CameraControl : MonoBehaviour {
 
         //Mouse ScrollWheel Control
         scroll = Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
-        Debug.Log("scroll: " + scroll);
         if (scroll != 0.0f)
         {
+            Debug.Log("scroll: " + scroll);
             cam.orthographicSize -= scroll;
             Debug.Log("zooming\nsize: " + cam.orthographicSize);
         }
