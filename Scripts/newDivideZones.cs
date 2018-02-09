@@ -56,12 +56,13 @@ public class newDivideZones : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            player_RotPhi.transform.Rotate(Vector3.up, -20.0f, Space.World);
+            //player_RotPhi.transform.Rotate(Vector3.up, -20.0f, Space.World);
+            player_RotPhi.transform.localRotation = player_RotPhi.transform.localRotation * Quaternion.Euler(0, 20, 0);
             delPhi += 20.0f;
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            player_RotPhi.transform.Rotate(Vector3.up, +20.0f, Space.World);
+            player_RotPhi.transform.localRotation = player_RotPhi.transform.localRotation * Quaternion.Euler(0, -20, 0);
             delPhi -= 20.0f;
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -149,7 +150,7 @@ public class newDivideZones : MonoBehaviour {
         mousePosition_cart -= testSubject.transform.position;
         Debug.Log("Cartesian Mouse Position = " + mousePosition_cart);
 
-        mousePosition_cart = Quaternion.Euler(new Vector3(0.0f, delPhi, delTheta)) * mousePosition_cart;        // correct spin
+        mousePosition_cart = Quaternion.Euler(new Vector3(delTheta, delPhi, 0)) * mousePosition_cart;        // correct spin
         Debug.Log("Cartesian (Spinned)Mouse Position = " + mousePosition_cart);
 
         mousePosition_sphe = CartesianToSpherical(mousePosition_cart, new Vector3(0,0,0));
