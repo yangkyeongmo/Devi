@@ -11,6 +11,8 @@ public class newDivideZones : MonoBehaviour {
     public float testScale;
     public GameObject dot;
     public Text debugText;
+    public GameObject player_RotPhi;
+    public GameObject player_RotThe;
 
     private GameObject debugLongitudeObject;
 
@@ -54,22 +56,22 @@ public class newDivideZones : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            testSubject.transform.Rotate(Vector3.up, -20.0f, Space.World);
+            player_RotPhi.transform.Rotate(Vector3.up, -20.0f, Space.World);
             delPhi += 20.0f;
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            testSubject.transform.Rotate(Vector3.up, +20.0f, Space.World);
+            player_RotPhi.transform.Rotate(Vector3.up, +20.0f, Space.World);
             delPhi -= 20.0f;
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            testSubject.transform.Rotate(Vector3.forward, 20.0f);
+            player_RotThe.transform.Rotate(Vector3.right, 20.0f);
             delTheta -= 20.0f;
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            testSubject.transform.Rotate(Vector3.forward, -20.0f);
+            player_RotThe.transform.Rotate(Vector3.right, -20.0f);
             delTheta += 20.0f;
         }
         if (Input.GetMouseButtonDown(0))
@@ -91,7 +93,7 @@ public class newDivideZones : MonoBehaviour {
             {
                 SphericalToCartesian(rad, thetaInterval_rad * i, j * interval * Mathf.Deg2Rad);
                 direction = new Vector3(x, y, z);
-                Vector3 dotPosition = (testSubject.transform.position + new Vector3(0,15,0)) + direction;                           //dotPosition = parentposition + SphericalCoordinate
+                Vector3 dotPosition = testSubject.transform.position+ direction;                           //dotPosition = parentposition + SphericalCoordinate
                 GameObject linecomponent = Instantiate(dot, dotPosition, Quaternion.Euler(0, 0, 0));
 
                 lookRotation = Quaternion.LookRotation(direction.normalized);                               //Rotate parallel to normal vector
@@ -115,7 +117,7 @@ public class newDivideZones : MonoBehaviour {
             {
                 SphericalToCartesian(rad, j * interval * Mathf.Deg2Rad, phiInterval_rad * i);
                 direction = new Vector3(x, y, z);
-                Vector3 dotPosition = (testSubject.transform.position + new Vector3(0, 15, 0)) + new Vector3(x, y, z);                //dotPosition = parentposition + SphericalCoordinate
+                Vector3 dotPosition = testSubject.transform.position + new Vector3(x, y, z);                //dotPosition = parentposition + SphericalCoordinate
                 GameObject linecomponent = Instantiate(dot, dotPosition, Quaternion.Euler(0, 0, 0));
 
                 lookRotation = Quaternion.LookRotation(direction.normalized);                               //Rotate parallel to normal vector
@@ -144,11 +146,13 @@ public class newDivideZones : MonoBehaviour {
             mousePosition_cart = hit.point;
         }
 
-        mousePosition_cart = Quaternion.Euler(new Vector3(0.0f, delPhi, delTheta)) * mousePosition_cart;        // correct spin
-
+        mousePosition_cart -= testSubject.transform.position;
         Debug.Log("Cartesian Mouse Position = " + mousePosition_cart);
 
-        mousePosition_sphe = CartesianToSpherical(mousePosition_cart, (testSubject.transform.position + new Vector3(0, 15, 0)));
+        mousePosition_cart = Quaternion.Euler(new Vector3(0.0f, delPhi, delTheta)) * mousePosition_cart;        // correct spin
+        Debug.Log("Cartesian (Spinned)Mouse Position = " + mousePosition_cart);
+
+        mousePosition_sphe = CartesianToSpherical(mousePosition_cart, new Vector3(0,0,0));
 
         //mousePosition_sphe = mousePosition_sphe - new Vector3(0.0f, delTheta, delPhi); // correct spin
         mousePosition_sphe.y = CorrectTheta(mousePosition_sphe.y);  // correct corrected theta
@@ -223,7 +227,7 @@ public class newDivideZones : MonoBehaviour {
 
     public int GetSelectedZoneNumber()
     {
-        int k = 0;
+        int k = 1;
 
         if (mousePosition_sphe.y > 0 && mousePosition_sphe.y < thetaInterval_rad * Mathf.Rad2Deg)
         {
@@ -250,6 +254,11 @@ public class newDivideZones : MonoBehaviour {
 
                 k++;
             }
+        }
+
+        if(mousePosition_sphe.y < 0 || mousePosition_sphe.z < 0)
+        {
+            Debug.Log("Selected Zone #(0~49): ERROR");
         }
         return 0;
     }

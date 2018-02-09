@@ -68,19 +68,19 @@ public class CameraControl : MonoBehaviour {
         }
             
         //Move Camera Position
-        if(Input.GetAxis("Horizontal") > 0.0f)
+        if (Input.GetKeyDown(KeyCode.W))
         {
             cam.transform.position += new Vector3(cameraSpeed, 0.0f, 0.0f);
         }
-        if (Input.GetAxis("Horizontal") < 0.0f)
+        if (Input.GetKeyDown(KeyCode.S))
         {
             cam.transform.position += new Vector3(-cameraSpeed, 0.0f, 0.0f);
         }
-        if (Input.GetAxis("Vertical") > 0.0f)
+        if (Input.GetKeyDown(KeyCode.D))
         {
             cam.transform.position += new Vector3(0.0f, +cameraSpeed, 0.0f);
         }
-        if (Input.GetAxis("Vertical") < 0.0f)
+        if (Input.GetKeyDown(KeyCode.A))
         {
             cam.transform.position += new Vector3(0.0f, -cameraSpeed, 0.0f);
         }
