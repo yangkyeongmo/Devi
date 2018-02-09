@@ -35,6 +35,27 @@ public class GameControl : MonoBehaviour {
         earth.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
         dataText.text = "MOON \n Velocity: " + cp_moon.GetVelocity() + "\n Mass: " + cp_moon.GetMass() +
             "\n\n EARTH \n Velocity: " + cp_earth.GetVelocity() + "\n Mass: " + cp_earth.GetMass();
+
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            Time.timeScale = 1;
+            Debug.Log("Time x1");
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            Time.timeScale = 3;
+            Debug.Log("Time x3");
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            Time.timeScale = 5;
+            Debug.Log("Time x5");
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            Time.timeScale = 15;
+            Debug.Log("Time x15");
+        }
     }
 
     void SetCelestialProperties(GameObject body, float v, float m)

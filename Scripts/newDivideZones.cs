@@ -9,12 +9,12 @@ public class newDivideZones : MonoBehaviour {
 
     public float testRadius;
     public float testScale;
+    public GameObject dot;
     public Text debugText;
 
     private GameObject debugLongitudeObject;
 
     private GameObject testSubject;
-    private GameObject dot;
     private float thetaInterval_rad;
     private float phiInterval_rad;
     private Vector3 direction;
@@ -29,21 +29,20 @@ public class newDivideZones : MonoBehaviour {
     void Start ()
     {
         //for test drawing
-        testSubject = GameObject.Find("testSphere");
-        dot = GameObject.Find("dot");
+        testSubject = GameObject.Find("testsphere");
         dot.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f) * testScale;
 
         thetaInterval_rad = 30 * Mathf.Deg2Rad;
         phiInterval_rad = 30 * Mathf.Deg2Rad;
 
-        DrawLatitudeLine(testRadius, thetaInterval_rad, 2);
-        DrawLongitudeLine(testRadius, phiInterval_rad, 2);
+        //DrawLatitudeLine(testRadius, thetaInterval_rad, 5);
+        //DrawLongitudeLine(testRadius, phiInterval_rad, 5);
 
-        debugLongitudeObject = GameObject.Find("testSphere/Longitude0");
-        Text debugLongitudeText = debugLongitudeObject.AddComponent<Text>();
-        debugLongitudeText.text = "0";
+        //debugLongitudeObject = GameObject.Find(testSubject.name + "/Longitude0");
+        //Text debugLongitudeText = debugLongitudeObject.AddComponent<Text>();
+        //debugLongitudeText.text = "0";
 
-        Debug.Log("Draw Complete");
+        //Debug.Log("Draw Complete");
 
         SetMidPoints();
     }
@@ -92,7 +91,7 @@ public class newDivideZones : MonoBehaviour {
             {
                 SphericalToCartesian(rad, thetaInterval_rad * i, j * interval * Mathf.Deg2Rad);
                 direction = new Vector3(x, y, z);
-                Vector3 dotPosition = testSubject.transform.position + direction;                           //dotPosition = parentposition + SphericalCoordinate
+                Vector3 dotPosition = (testSubject.transform.position + new Vector3(0,15,0)) + direction;                           //dotPosition = parentposition + SphericalCoordinate
                 GameObject linecomponent = Instantiate(dot, dotPosition, Quaternion.Euler(0, 0, 0));
 
                 lookRotation = Quaternion.LookRotation(direction.normalized);                               //Rotate parallel to normal vector
@@ -116,7 +115,7 @@ public class newDivideZones : MonoBehaviour {
             {
                 SphericalToCartesian(rad, j * interval * Mathf.Deg2Rad, phiInterval_rad * i);
                 direction = new Vector3(x, y, z);
-                Vector3 dotPosition = testSubject.transform.position + new Vector3(x, y, z);                //dotPosition = parentposition + SphericalCoordinate
+                Vector3 dotPosition = (testSubject.transform.position + new Vector3(0, 15, 0)) + new Vector3(x, y, z);                //dotPosition = parentposition + SphericalCoordinate
                 GameObject linecomponent = Instantiate(dot, dotPosition, Quaternion.Euler(0, 0, 0));
 
                 lookRotation = Quaternion.LookRotation(direction.normalized);                               //Rotate parallel to normal vector
@@ -149,7 +148,7 @@ public class newDivideZones : MonoBehaviour {
 
         Debug.Log("Cartesian Mouse Position = " + mousePosition_cart);
 
-        mousePosition_sphe = CartesianToSpherical(mousePosition_cart, testSubject.transform.position);
+        mousePosition_sphe = CartesianToSpherical(mousePosition_cart, (testSubject.transform.position + new Vector3(0, 15, 0)));
 
         //mousePosition_sphe = mousePosition_sphe - new Vector3(0.0f, delTheta, delPhi); // correct spin
         mousePosition_sphe.y = CorrectTheta(mousePosition_sphe.y);  // correct corrected theta
