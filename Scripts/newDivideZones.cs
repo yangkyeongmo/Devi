@@ -224,14 +224,27 @@ public class newDivideZones : MonoBehaviour {
     public int GetSelectedZoneNumber()
     {
         int k = 0;
-        for(int i=0; i < 180  * Mathf.Deg2Rad / thetaInterval_rad; i++)
+
+        if (mousePosition_sphe.y > 0 && mousePosition_sphe.y < thetaInterval_rad * Mathf.Rad2Deg)
+        {
+            Debug.Log("Selected Zone#(0~49): 0");
+            return 0;
+        }
+
+        if(mousePosition_sphe.y > thetaInterval_rad * Mathf.Rad2Deg * ((180 * Mathf.Deg2Rad / thetaInterval_rad) - 1) && mousePosition_sphe.y < 180)
+        {
+            Debug.Log("Selected Zone#(0~49): 49");
+            return 49;
+        }
+
+        for (int i=1; i < (180  * Mathf.Deg2Rad / thetaInterval_rad) - 1; i++)
         {
             for(int j=0; j < 360 * Mathf.Deg2Rad / phiInterval_rad; j++)
             {
                 if(mousePosition_sphe.y > thetaInterval_rad * Mathf.Rad2Deg * i && mousePosition_sphe.y < thetaInterval_rad * Mathf.Rad2Deg * (i+1)             // 0 < mousePosition.theta < 30 if i=0
                     && mousePosition_sphe.z > phiInterval_rad * Mathf.Rad2Deg * j && mousePosition_sphe.z < phiInterval_rad * Mathf.Rad2Deg * (j + 1))          // 0 < mousePosition.phi > 30 if j=0
                 {
-                    Debug.Log("Selected Zone #(0~71): " + k);                                                                                                   // Zone# = 0 if i,j = 0
+                    Debug.Log("Selected Zone #(0~49): " + k);                                                                                                   // Zone# = 0 if i,j = 0
                     return k;
                 }
 
