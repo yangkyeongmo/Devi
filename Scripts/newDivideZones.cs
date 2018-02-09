@@ -44,7 +44,7 @@ public class newDivideZones : MonoBehaviour {
 
         //Debug.Log("Draw Complete");
 
-        SetMidPoints();
+        //SetMidPoints();
     }
 	
 	// Update is called once per frame

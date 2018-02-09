@@ -101,7 +101,7 @@ public class OrbitalMechanics : MonoBehaviour {
 
     void ConvertToOrbitalElements()
     {
-        Debug.Log("Convert to OE Started");
+        //Debug.Log("Convert to OE Started");
         init_position = transform.position - largerMass.transform.position;
         init_velocity = rb.velocity;
         h = Vector3.Cross(init_position, init_velocity);
@@ -137,7 +137,7 @@ public class OrbitalMechanics : MonoBehaviour {
 
     void ConvertFromOrbitalElements()
     {
-        Debug.Log("Convert From OE Started");
+        //Debug.Log("Convert From OE Started");
         next_position = (p/(1+e* Mathf.Cos(v))) * (Mathf.Cos(v) * o1 + Mathf.Sin(v) * o2);
         next_velocity = Mathf.Sqrt(p / mu) * (-Mathf.Sin(v) * o1 + (e + Mathf.Cos(v)) * o2);
     }
