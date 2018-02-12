@@ -7,15 +7,13 @@ public class EarthReactions : MonoBehaviour {
     public Transform[] launchPosition;
     public GameObject attackMissile;
     public int missileSpawnInterval;
-
-    private Transform earthCore;
+    
     private Transform selectedLaunchPosition;
     private int timeNow;
     private int timeNext;
 
 	// Use this for initialization
 	void Start () {
-        earthCore = GameObject.Find("earthCore").transform;
         timeNow = (int)Time.time;
         timeNext = timeNow;
 	}
@@ -32,14 +30,9 @@ public class EarthReactions : MonoBehaviour {
 
     void SpawnMissile()
     {
-        Vector3 direction;
         int randomCount = Random.Range(0, launchPosition.Length - 1);
         selectedLaunchPosition = launchPosition[randomCount];
-        Debug.Log("Attack Missile Launch at : Position" + randomCount);
-
-        direction = (earthCore.position - selectedLaunchPosition.position).normalized;
-        GameObject spawnedMissile = Instantiate(attackMissile, selectedLaunchPosition.position , Quaternion.identity);
-        spawnedMissile.transform.up = direction;
-        Debug.Log("Attack Missile Launched");
+        Instantiate(attackMissile, selectedLaunchPosition.position, Quaternion.identity);
+        Debug.Log("Attack Missile Launched at : Position" + randomCount);
     }
 }
