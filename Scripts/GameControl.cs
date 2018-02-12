@@ -32,7 +32,7 @@ public class GameControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        earth.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+        //earth.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
         dataText.text = "MOON \n Velocity: " + cp_moon.GetVelocity() + "\n Mass: " + cp_moon.GetMass() +
             "\n\n EARTH \n Velocity: " + cp_earth.GetVelocity() + "\n Mass: " + cp_earth.GetMass();
 
