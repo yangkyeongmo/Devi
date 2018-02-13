@@ -86,6 +86,6 @@ public class CameraControl : MonoBehaviour {
             movement += new Vector3(-cameraSpeed, 0.0f, 0.0f);
         }
 
-        cam.transform.position = player.transform.position + movement + new Vector3(0, 5, -40);
+        cam.transform.position = player.transform.position + movement + new Vector3(0, 0, -40);
     }
 }

@@ -11,8 +11,6 @@ public class newDivideZones : MonoBehaviour {
     public float testScale;
     public GameObject dot;
     public Text debugText;
-    public GameObject player_RotPhi;
-    public GameObject player_RotThe;
 
     private GameObject debugLongitudeObject;
 
@@ -57,22 +55,22 @@ public class newDivideZones : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             //player_RotPhi.transform.Rotate(Vector3.up, -20.0f, Space.World);
-            player_RotPhi.transform.localRotation = player_RotPhi.transform.localRotation * Quaternion.Euler(0, 20, 0);
+            transform.localRotation = transform.localRotation * Quaternion.Euler(0, 20, 0);
             delPhi += 20.0f;
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            player_RotPhi.transform.localRotation = player_RotPhi.transform.localRotation * Quaternion.Euler(0, -20, 0);
+            transform.localRotation = transform.localRotation * Quaternion.Euler(0, -20, 0);
             delPhi -= 20.0f;
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            player_RotThe.transform.Rotate(Vector3.right, 20.0f);
+            transform.Rotate(Vector3.right, 20.0f);
             delTheta -= 20.0f;
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            player_RotThe.transform.Rotate(Vector3.right, -20.0f);
+            transform.Rotate(Vector3.right, -20.0f);
             delTheta += 20.0f;
         }
         if (Input.GetMouseButtonDown(0))
