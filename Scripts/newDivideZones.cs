@@ -264,31 +264,33 @@ public class newDivideZones : MonoBehaviour {
 
     void SetMidPoints()
     {
-        //GameObject midPoint;
-        GameObject midPoint_parent = Instantiate(new GameObject());
+        GameObject midPoint;
+        GameObject midPoint_parent = new GameObject();
         midPoint_parent.transform.parent = testSubject.transform;
         midPoint_parent.name = "MidPoints";
 
-        /*SphericalToCartesian(testRadius, 0, 0);
-        midPoint = Instantiate(new GameObject(), testSubject.transform.position + new Vector3(x, y, z), Quaternion.identity);
+        SphericalToCartesian(testRadius, 0, 0);
+        midPoint = new GameObject();
+        midPoint.transform.position = testSubject.transform.position + new Vector3(x, y, z);
         midPoint.transform.parent = midPoint_parent.transform;
-        midPoint.name = "MidPoint 0";
-
-        SphericalToCartesian(testRadius, 180 * Mathf.Deg2Rad, 0);
-        midPoint = Instantiate(new GameObject(), testSubject.transform.position + new Vector3(x, y, z), Quaternion.identity);
-        midPoint.transform.parent = midPoint_parent.transform;
-        midPoint.name = "MidPoint 49";
+        midPoint.name = "MidPoint0";
 
         for (int i = 1; i < (180 * Mathf.Deg2Rad / thetaInterval_rad) - 1; i++)
         {
             for (int j = 0; j < 360 * Mathf.Deg2Rad / phiInterval_rad; j++)
             {
                 SphericalToCartesian(testRadius, i * thetaInterval_rad + thetaInterval_rad / 2 + delTheta, j * phiInterval_rad + phiInterval_rad / 2 + delPhi - 90 * Mathf.Deg2Rad);
-
-                midPoint = Instantiate(new GameObject(), testSubject.transform.position + new Vector3(x, y, z), Quaternion.identity);
+                midPoint = new GameObject();
+                midPoint.transform.position = testSubject.transform.position + new Vector3(x, y, z);
                 midPoint.transform.parent = midPoint_parent.transform;
                 midPoint.name = "MidPoint" + ((i-1) * 12 + j + 1);
             }
-        }*/
+        }
+
+        SphericalToCartesian(testRadius, 180 * Mathf.Deg2Rad, 0);
+        midPoint = new GameObject();
+        midPoint.transform.position = testSubject.transform.position + new Vector3(x, y, z);
+        midPoint.transform.parent = midPoint_parent.transform;
+        midPoint.name = "MidPoint49";
     }
 }
