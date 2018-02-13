@@ -479,7 +479,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c559ad9e717a7bd46946f3bf21ebf728, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c559ad9e717a7bd46946f3bf21ebf728, type: 3}
       propertyPath: m_LocalScale.x
@@ -730,7 +730,7 @@ Transform:
   m_LocalScale: {x: 90, y: 90, z: 90}
   m_Children: []
   m_Father: {fileID: 1624460357}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1176422680
 SphereCollider:
@@ -976,7 +976,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5ae9ccece316d1a4ca7f004240ae44e6, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 5ae9ccece316d1a4ca7f004240ae44e6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -1307,6 +1307,7 @@ GameObject:
   - component: {fileID: 1807959404}
   - component: {fileID: 1807959408}
   - component: {fileID: 1807959407}
+  - component: {fileID: 1807959409}
   m_Layer: 0
   m_Name: Moon
   m_TagString: Player
@@ -1398,6 +1399,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   railgunTurret: {fileID: 1084529308674290, guid: 6ebff8c39284ec84d9f9e5025931a306,
     type: 2}
+--- !u!135 &1807959409
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1807959402}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 6.1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1872459095
 GameObject:
   m_ObjectHideFlags: 0
@@ -1681,55 +1694,6 @@ Transform:
   m_Father: {fileID: 1641674377}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2056729564
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2056729565}
-  - component: {fileID: 2056729567}
-  - component: {fileID: 2056729566}
-  m_Layer: 0
-  m_Name: testsphere
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2056729565
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2056729564}
-  m_LocalRotation: {x: -0, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 30, z: 0}
-  m_LocalScale: {x: 62.5, y: 62.5, z: 62.5}
-  m_Children: []
-  m_Father: {fileID: 1624460357}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &2056729566
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2056729564}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &2056729567
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2056729564}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &2131314246
 GameObject:
   m_ObjectHideFlags: 0

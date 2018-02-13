@@ -59,5 +59,4 @@ public class CreateBuildings : MonoBehaviour
     {
         return zoneOccupied;
     }
-
 }

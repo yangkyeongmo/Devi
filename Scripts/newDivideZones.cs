@@ -165,8 +165,6 @@ public class newDivideZones : MonoBehaviour {
                 Debug.Log("Not clicked on player");
             }
         }
-
-        
     }
 
     Vector3 CartesianToSpherical(Vector3 sc, Vector3 origin)
