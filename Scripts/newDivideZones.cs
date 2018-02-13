@@ -29,7 +29,7 @@ public class newDivideZones : MonoBehaviour {
     void Start ()
     {
         //for test drawing
-        testSubject = GameObject.Find("testsphere");
+        testSubject = GameObject.FindWithTag("Player");
         dot.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f) * testScale;
 
         thetaInterval_rad = 30 * Mathf.Deg2Rad;
