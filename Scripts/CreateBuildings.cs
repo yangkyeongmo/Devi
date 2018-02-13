@@ -8,13 +8,16 @@ public class CreateBuildings : MonoBehaviour
 {
     public GameObject railgunTurret;
 
-    private int[] zoneOccupied;
     private bool isTurretButtonClicked = false;
+
+    private GameObject player;
     private newDivideZones dz;
+    private int[] zoneOccupied;
 
     // Use this for initialization
     void Start()
     {
+        player = this.gameObject;
         dz = GetComponent<newDivideZones>();
         zoneOccupied = new int[50];
         for(int i=0; i < zoneOccupied.Length; i++)
@@ -31,11 +34,11 @@ public class CreateBuildings : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 int selectedZone = dz.GetSelectedZoneNumber();
-                Debug.Log("selected Zone: " + selectedZone);
-                GameObject spawnedTurret = Instantiate(railgunTurret, 
-                    GameObject.Find("MidPoint" + selectedZone).transform.position, 
-                    Quaternion.identity);
-                spawnedTurret.transform.parent = this.gameObject.transform;
+                GameObject selectedMidPoint = GameObject.Find("MidPoint" + selectedZone);
+                Debug.Log(selectedMidPoint.name);
+                GameObject spawnedTurret = Instantiate(railgunTurret, selectedMidPoint.transform.position, Quaternion.identity);
+                spawnedTurret.transform.parent = selectedMidPoint.transform;
+                spawnedTurret.transform.up = - player.transform.position + spawnedTurret.transform.position;
                 SetZoneOccupied(selectedZone);
                 isTurretButtonClicked = false;
             }

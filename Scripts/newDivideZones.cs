@@ -145,19 +145,26 @@ public class newDivideZones : MonoBehaviour {
             mousePosition_cart = hit.point;
         }
 
-        mousePosition_cart -= testSubject.transform.position;
-        Debug.Log("Cartesian Mouse Position = " + mousePosition_cart);
+        if(hit.collider.tag == "Player")
+        {
+            mousePosition_cart -= testSubject.transform.position;
+            Debug.Log("Cartesian Mouse Position = " + mousePosition_cart);
 
-        mousePosition_cart = Quaternion.Euler(new Vector3(delTheta, delPhi, 0)) * mousePosition_cart;        // correct spin
-        Debug.Log("Cartesian (Spinned)Mouse Position = " + mousePosition_cart);
+            mousePosition_cart = Quaternion.Euler(new Vector3(delTheta, delPhi, 0)) * mousePosition_cart;        // correct spin
+            Debug.Log("Cartesian (Spinned)Mouse Position = " + mousePosition_cart);
 
-        mousePosition_sphe = CartesianToSpherical(mousePosition_cart, new Vector3(0,0,0));
+            mousePosition_sphe = CartesianToSpherical(mousePosition_cart, new Vector3(0, 0, 0));
 
-        //mousePosition_sphe = mousePosition_sphe - new Vector3(0.0f, delTheta, delPhi); // correct spin
-        mousePosition_sphe.y = CorrectTheta(mousePosition_sphe.y);  // correct corrected theta
-        mousePosition_sphe.z = CorrectPhi(mousePosition_sphe.z, mousePosition_cart);    // correct corrected phi
+            //mousePosition_sphe = mousePosition_sphe - new Vector3(0.0f, delTheta, delPhi); // correct spin
+            mousePosition_sphe.y = CorrectTheta(mousePosition_sphe.y);  // correct corrected theta
+            mousePosition_sphe.z = CorrectPhi(mousePosition_sphe.z, mousePosition_cart);    // correct corrected phi
 
-        Debug.Log("Corrected corrected Spherical Mouse Position = " + mousePosition_sphe);
+            Debug.Log("Corrected corrected Spherical Mouse Position = " + mousePosition_sphe);
+        }
+        else if(hit.collider.tag != "Player")
+        {
+            Debug.Log("Not clicked on player");
+        }
     }
 
     Vector3 CartesianToSpherical(Vector3 sc, Vector3 origin)
@@ -226,6 +233,7 @@ public class newDivideZones : MonoBehaviour {
 
     public int GetSelectedZoneNumber()
     {
+        GetSpinnedSphericalMousePosition();
         int k = 1;
 
         if (mousePosition_sphe.y > 0 && mousePosition_sphe.y < thetaInterval_rad * Mathf.Rad2Deg)
