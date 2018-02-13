@@ -10,6 +10,7 @@ public class CameraControl : MonoBehaviour {
     public float clampMargin;
     public float cameraSpeed;
 
+    private Vector3 movement = new Vector3(0,0,0);
     private float scroll;
     private Camera cam;
     private GameObject player;
@@ -68,21 +69,23 @@ public class CameraControl : MonoBehaviour {
         }
             
         //Move Camera Position
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKey(KeyCode.W))
         {
-            cam.transform.position += new Vector3(cameraSpeed, 0.0f, 0.0f);
+            movement += new Vector3(0.0f, +cameraSpeed, 0.0f);
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKey(KeyCode.S))
         {
-            cam.transform.position += new Vector3(-cameraSpeed, 0.0f, 0.0f);
+            movement += new Vector3(0.0f, -cameraSpeed, 0.0f);
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
-            cam.transform.position += new Vector3(0.0f, +cameraSpeed, 0.0f);
+            movement += new Vector3(cameraSpeed, 0.0f, 0.0f);
         }
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
-            cam.transform.position += new Vector3(0.0f, -cameraSpeed, 0.0f);
+            movement += new Vector3(-cameraSpeed, 0.0f, 0.0f);
         }
+
+        cam.transform.position = player.transform.position + movement + new Vector3(0, 5, -40);
     }
 }
