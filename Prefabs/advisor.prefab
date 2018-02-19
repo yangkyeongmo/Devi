@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4514208017051436}
   m_Layer: 0
-  m_Name: advisor_newdesign-4
+  m_Name: advisor_wall2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4415154957067100}
   m_Layer: 0
-  m_Name: advisor_newdesign-10
+  m_Name: advisor_thrust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4477683705114490}
   m_Layer: 0
-  m_Name: advisor_newdesign-0
+  m_Name: advisor_wall0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4504692414290112}
   m_Layer: 0
-  m_Name: advisor_newdesign-8
+  m_Name: advisor_head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,8 +147,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4024757761843594}
+  - component: {fileID: 114731887585595652}
   m_Layer: 0
-  m_Name: advisor_newdesign-1
+  m_Name: advisor_main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,7 +164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4617861398615132}
   m_Layer: 0
-  m_Name: advisor_newdesign-6
+  m_Name: advisor_wall3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -228,6 +229,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4357782051677636}
+  - component: {fileID: 114712858879027976}
   m_Layer: 0
   m_Name: advisor
   m_TagString: Untagged
@@ -244,7 +246,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4160579986600472}
   m_Layer: 0
-  m_Name: advisor_newdesign-2
+  m_Name: advisor_wall1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -746,3 +748,35 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1660274726340958}
   m_Mesh: {fileID: 4300000, guid: 2bb86ac68ae5b2e40b2770e00cde08ac, type: 3}
+--- !u!114 &114712858879027976
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1911414850689912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a36c8bdbc40505a4cb89d7bb359e74e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  approachSpeed: 0
+  approachRange: 0
+  arriveRange: 0
+  detachSpeed: 0
+--- !u!114 &114731887585595652
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1556116629022824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed339c5484ba6d34dacff3bbb853346a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0
+  am: {fileID: 0}
+  isCollisionEntered: 0
+  player: {fileID: 0}
+  moveDirection: {x: 0, y: 0, z: 0}

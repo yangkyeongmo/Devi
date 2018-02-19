@@ -8,6 +8,7 @@ public class AdvisorMovement : MonoBehaviour {
     public float approachSpeed;
     public float approachRange;
     public float arriveRange;
+    public float detachSpeed;
 
     private bool isArrived = false;
     private CreateBuildings cb;
@@ -23,12 +24,14 @@ public class AdvisorMovement : MonoBehaviour {
         cb = player.GetComponent<CreateBuildings>();
 
         //Find unoccupied zone and set as target
-        int[] zoneOccupiedNum = cb.GetOccupyInfo();
-        int randomNum = Random.Range(0, zoneOccupiedNum.Length);
-        while(zoneOccupiedNum[randomNum] == 1)
+        int[] zoneOccupied = cb.GetOccupyInfo();
+        Debug.Log(zoneOccupied.Length);
+        //int randomNum = Random.Range(0, zoneOccupiedNum.Length);
+        int randomNum = Random.Range(0, 50);
+        while (zoneOccupied[randomNum] == 1)
         {
-            randomNum = Random.Range(0, zoneOccupiedNum.Length);
-            if(zoneOccupiedNum[randomNum] != 1)
+            randomNum = Random.Range(0, zoneOccupied.Length);
+            if(zoneOccupied[randomNum] != 1)
             {
                 break;
             }
@@ -61,6 +64,18 @@ public class AdvisorMovement : MonoBehaviour {
         if ((transform.position - player.transform.position).magnitude <= arriveRange)
         {
             isArrived = true;
+            GameObject[] detachParts = new GameObject[6];
+            detachParts[0] = transform.FindChild("advisor_wall0").gameObject;
+            detachParts[1] = transform.FindChild("advisor_wall1").gameObject;
+            detachParts[2] = transform.FindChild("advisor_wall2").gameObject;
+            detachParts[3] = transform.FindChild("advisor_wall3").gameObject;
+            detachParts[4] = transform.FindChild("advisor_head").gameObject;
+            detachParts[5] = transform.FindChild("advisor_thrust").gameObject;
+
+            for(int i=0; i<detachParts.Length; i++)
+            {
+                detachParts[i].transform.position += (detachParts[i].transform.position - transform.position) * detachSpeed;          //Detach useless parts
+            }
         }
     }
 
@@ -68,5 +83,4 @@ public class AdvisorMovement : MonoBehaviour {
     {
         return isArrived;
     }
-
 }
