@@ -19,12 +19,12 @@ public class AdvisorMovement : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        cb = player.GetComponent<CreateBuildings>();
         player = GameObject.FindWithTag("Player");
+        cb = player.GetComponent<CreateBuildings>();
 
         //Find unoccupied zone and set as target
         int[] zoneOccupiedNum = cb.GetOccupyInfo();
-        int randomNum = Random.Range(0,zoneOccupiedNum.Length);
+        int randomNum = Random.Range(0, zoneOccupiedNum.Length);
         while(zoneOccupiedNum[randomNum] == 1)
         {
             randomNum = Random.Range(0, zoneOccupiedNum.Length);
@@ -34,6 +34,7 @@ public class AdvisorMovement : MonoBehaviour {
             }
         }
         targetMidpoint = GameObject.Find("MidPoint" + randomNum);
+        Debug.Log("Target Midpoint #: " + randomNum);
 	}
 	
 	// Update is called once per frame
@@ -42,7 +43,7 @@ public class AdvisorMovement : MonoBehaviour {
         //move to player itself
         if ((transform.position - player.transform.position).magnitude >= approachRange)
         {
-            moveDirection = (transform.position - player.transform.position).normalized;
+            moveDirection = (player.transform.position - transform.position).normalized;
             transform.position += moveDirection * speed;
             transform.up = moveDirection;                                                                                           //Up direction parralell to move direction
         }
@@ -50,9 +51,10 @@ public class AdvisorMovement : MonoBehaviour {
         //move to target point from certain range
         if((transform.position - player.transform.position).magnitude <= approachRange)
         {
-            moveDirection = (transform.position - targetMidpoint.transform.position).normalized;
+            moveDirection = (player.transform.position - transform.position).normalized;
             transform.position += moveDirection * approachSpeed;
-            transform.up = -moveDirection;                                                                                          //Up direction opposite to move direction 
+            transform.up = Quaternion.FromToRotation(transform.up, -moveDirection) * transform.up * Time.deltaTime;
+            //transform.up = -moveDirection;                                                                                          //Up direction opposite to move direction 
         }
 
 

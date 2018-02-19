@@ -56,7 +56,10 @@ public class OrbitalMechanics : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        PositionUpdateAlgorithm();
+        PositionUpdateAlgorithm();                                                                                      //move as its orbit if collision not detected
+        //if(isCollisionDetected){                                                                                      //move as its new orbit if collision detected
+        //blah blah... start from beginning and sustain its collision force
+        //}
 	}
 
     void PositionUpdateAlgorithm()
