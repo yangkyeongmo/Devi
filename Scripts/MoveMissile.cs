@@ -18,10 +18,8 @@ public class MoveMissile : MonoBehaviour {
 	void Start () {
         earthCore = GameObject.Find("earthCore").transform;
         rb = GetComponent<Rigidbody>();
-        //rb.velocity = transform.up * initialSpeed;
-        Debug.Log("up_bf: " + transform.up);
+        rb.velocity = transform.up * initialSpeed;
         transform.up = (transform.position - earthCore.position).normalized;
-        Debug.Log("up_af: " + transform.up);
 	}
 	
 	// Update is called once per frame
@@ -30,7 +28,7 @@ public class MoveMissile : MonoBehaviour {
         speed = rb.velocity.magnitude;
         direction = (transform.up + (playerPosition - transform.position).normalized * modifier).normalized;
         transform.up = direction;
-        //rb.velocity = speed * direction;
+        rb.velocity = speed * direction;
 
         //leave marker to visualize trajectory(for debug)
         GameObject mark = Instantiate(marker, transform);
