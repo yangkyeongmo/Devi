@@ -39,6 +39,7 @@ public class CreateBuildings : MonoBehaviour
                 GameObject spawnedTurret = Instantiate(railgunTurret, selectedMidPoint.transform.position, Quaternion.identity);
                 spawnedTurret.transform.parent = selectedMidPoint.transform;
                 spawnedTurret.transform.up = - player.transform.position + spawnedTurret.transform.position;
+                spawnedTurret.transform.position -= spawnedTurret.transform.up * 3.5f;
                 SetZoneOccupied(selectedZone);
                 isTurretButtonClicked = false;
             }
