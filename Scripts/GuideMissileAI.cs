@@ -29,13 +29,13 @@ public class GuideMissileAI : MonoBehaviour {
             {
                 isDetouring = true;
                 Debug.Log(go.transform.name + " is detouring because of " + hit.transform.name);
-                rb.velocity = rb.velocity.magnitude * Vector3.Cross(hit.transform.up, go.transform.up);
+                rb.velocity = rb.velocity.magnitude * Vector3.Cross(hit.transform.up, go.transform.position - hit.transform.position);
             }
         }
     }
 
     public bool GetIsDetouring()
     {
-        return isDetouring;
+        return isDetouring; //to take control of other script's decision on velocity
     }
 }
