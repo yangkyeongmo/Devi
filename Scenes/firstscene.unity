@@ -1769,17 +1769,32 @@ Prefab:
     - target: {fileID: 114712858879027976, guid: dcc1de026c12b8b46abd08e50955f58c,
         type: 2}
       propertyPath: approachSpeed
-      value: 0.05
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 114712858879027976, guid: dcc1de026c12b8b46abd08e50955f58c,
         type: 2}
       propertyPath: approachRange
-      value: 50
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114712858879027976, guid: dcc1de026c12b8b46abd08e50955f58c,
         type: 2}
       propertyPath: arriveRange
-      value: 35
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114712858879027976, guid: dcc1de026c12b8b46abd08e50955f58c,
+        type: 2}
+      propertyPath: detachSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114731887585595652, guid: dcc1de026c12b8b46abd08e50955f58c,
+        type: 2}
+      propertyPath: detachSpeed
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 114731887585595652, guid: dcc1de026c12b8b46abd08e50955f58c,
+        type: 2}
+      propertyPath: moveSpeed
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dcc1de026c12b8b46abd08e50955f58c, type: 2}
