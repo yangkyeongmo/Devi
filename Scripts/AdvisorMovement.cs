@@ -60,7 +60,6 @@ public class AdvisorMovement : MonoBehaviour {
         if (cb.GetIsSetZoneOccupiedArray() && isSetTarget == false)
         {
             int[] zoneOccupied = cb.GetOccupyInfo();
-            Debug.Log(zoneOccupied.Length);
             //int randomNum = Random.Range(0, zoneOccupiedNum.Length);
             int randomNum = Random.Range(0, 50);
             while (zoneOccupied[randomNum] == 1)

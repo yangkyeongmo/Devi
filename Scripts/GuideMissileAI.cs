@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GuideMissileAI : MonoBehaviour {
-    
+
+    private bool isDetouring = false;
 
 	// Use this for initialization
 	void Start () {
@@ -24,8 +25,17 @@ public class GuideMissileAI : MonoBehaviour {
 
         if (Physics.Raycast(transform.position, upward, out hit, rb.velocity.magnitude * allowance))
         {
-            Debug.Log(go.transform.name + " is detouring because of " + hit.transform.name);
-            rb.velocity = rb.velocity.magnitude * Vector3.Cross(hit.transform.up, go.transform.up);
+            if (true) //if (hit == some object it should avoid)
+            {
+                isDetouring = true;
+                Debug.Log(go.transform.name + " is detouring because of " + hit.transform.name);
+                rb.velocity = rb.velocity.magnitude * Vector3.Cross(hit.transform.up, go.transform.up);
+            }
         }
+    }
+
+    public bool GetIsDetouring()
+    {
+        return isDetouring;
     }
 }
