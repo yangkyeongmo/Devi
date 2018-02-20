@@ -46,8 +46,7 @@ public class AdvisorMovement : MonoBehaviour {
             transform.up = Quaternion.FromToRotation(transform.up, -moveDirection) * transform.up * Time.deltaTime;
             //transform.up = -moveDirection;                                                                                          //Up direction opposite to move direction 
         }
-
-
+        
         if ((transform.position - player.transform.position).magnitude <= arriveRange && isArrived == false)
         {
             isArrived = true;
