@@ -52,7 +52,7 @@ public class AdvisorMovement : MonoBehaviour {
         }
             
         //move to target point from certain range
-        if((transform.position - player.transform.position).magnitude <= approachRange)
+        if((transform.position - player.transform.position).magnitude <= approachRange && isArrived == false)
         {
             moveDirection = (player.transform.position - transform.position).normalized;
             transform.position += moveDirection * approachSpeed;
@@ -61,21 +61,10 @@ public class AdvisorMovement : MonoBehaviour {
         }
 
 
-        if ((transform.position - player.transform.position).magnitude <= arriveRange)
+        if ((transform.position - player.transform.position).magnitude <= arriveRange && isArrived == false)
         {
             isArrived = true;
-            GameObject[] detachParts = new GameObject[6];
-            detachParts[0] = transform.FindChild("advisor_wall0").gameObject;
-            detachParts[1] = transform.FindChild("advisor_wall1").gameObject;
-            detachParts[2] = transform.FindChild("advisor_wall2").gameObject;
-            detachParts[3] = transform.FindChild("advisor_wall3").gameObject;
-            detachParts[4] = transform.FindChild("advisor_head").gameObject;
-            detachParts[5] = transform.FindChild("advisor_thrust").gameObject;
-
-            for(int i=0; i<detachParts.Length; i++)
-            {
-                detachParts[i].transform.position += (detachParts[i].transform.position - transform.position) * detachSpeed;          //Detach useless parts
-            }
+            Debug.Log("Advisor arrived!");
         }
     }
 
