@@ -9,6 +9,7 @@ public class CreateBuildings : MonoBehaviour
     public GameObject railgunTurret;
 
     private bool isTurretButtonClicked = false;
+    private bool isSetZoneOccupiedArray = false;
 
     private GameObject player;
     private newDivideZones dz;
@@ -24,6 +25,8 @@ public class CreateBuildings : MonoBehaviour
         {
             zoneOccupied[i] = 0;
         }
+        isSetZoneOccupiedArray = true;
+        Debug.Log("Completed setting zoneOccupied");
     }
 
     // Update is called once per frame
@@ -59,5 +62,10 @@ public class CreateBuildings : MonoBehaviour
     public int[] GetOccupyInfo()
     {
         return zoneOccupied;
+    }
+
+    public bool GetIsSetZoneOccupiedArray()
+    {
+        return isSetZoneOccupiedArray;
     }
 }

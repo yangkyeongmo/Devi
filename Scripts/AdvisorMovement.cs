@@ -11,6 +11,7 @@ public class AdvisorMovement : MonoBehaviour {
     public float detachSpeed;
 
     private bool isArrived = false;
+    private bool isSetTarget = false;
     private CreateBuildings cb;
     private float targetMidpointNum;
     private GameObject player;
@@ -22,27 +23,13 @@ public class AdvisorMovement : MonoBehaviour {
     {
         player = GameObject.FindWithTag("Player");
         cb = player.GetComponent<CreateBuildings>();
-
-        //Find unoccupied zone and set as target
-        int[] zoneOccupied = cb.GetOccupyInfo();
-        Debug.Log(zoneOccupied.Length);
-        //int randomNum = Random.Range(0, zoneOccupiedNum.Length);
-        int randomNum = Random.Range(0, 50);
-        while (zoneOccupied[randomNum] == 1)
-        {
-            randomNum = Random.Range(0, zoneOccupied.Length);
-            if(zoneOccupied[randomNum] != 1)
-            {
-                break;
-            }
-        }
-        targetMidpoint = GameObject.Find("MidPoint" + randomNum);
-        Debug.Log("Target Midpoint #: " + randomNum);
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
+        SetTarget();
+
         //move to player itself
         if ((transform.position - player.transform.position).magnitude >= approachRange)
         {
@@ -54,7 +41,7 @@ public class AdvisorMovement : MonoBehaviour {
         //move to target point from certain range
         if((transform.position - player.transform.position).magnitude <= approachRange && isArrived == false)
         {
-            moveDirection = (player.transform.position - transform.position).normalized;
+            moveDirection = (player.transform.position - targetMidpoint.transform.position).normalized;
             transform.position += moveDirection * approachSpeed;
             transform.up = Quaternion.FromToRotation(transform.up, -moveDirection) * transform.up * Time.deltaTime;
             //transform.up = -moveDirection;                                                                                          //Up direction opposite to move direction 
@@ -65,6 +52,29 @@ public class AdvisorMovement : MonoBehaviour {
         {
             isArrived = true;
             Debug.Log("Advisor arrived!");
+        }
+    }
+
+    void SetTarget()
+    {
+        //Find unoccupied zone and set as target
+        if (cb.GetIsSetZoneOccupiedArray() && isSetTarget == false)
+        {
+            int[] zoneOccupied = cb.GetOccupyInfo();
+            Debug.Log(zoneOccupied.Length);
+            //int randomNum = Random.Range(0, zoneOccupiedNum.Length);
+            int randomNum = Random.Range(0, 50);
+            while (zoneOccupied[randomNum] == 1)
+            {
+                randomNum = Random.Range(0, zoneOccupied.Length);
+                if (zoneOccupied[randomNum] != 1)
+                {
+                    break;
+                }
+            }
+            targetMidpoint = GameObject.Find("MidPoint" + randomNum);
+            Debug.Log("Target Midpoint #: " + randomNum);
+            isSetTarget = true;
         }
     }
 

@@ -75,7 +75,6 @@ public class AdvisorMainMechanics : MonoBehaviour {
             detachParts[i].transform.position += randomDirection[i] * detachSpeed;          //Detach useless parts
             Debug.Log(detachParts[i].transform.forward * detachSpeed);
             detachParts[i].transform.Rotate(randomRotationVector[i]);
-            Debug.Log("Detaching..");
         }
     }
 
