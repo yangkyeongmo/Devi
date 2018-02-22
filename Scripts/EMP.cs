@@ -13,4 +13,22 @@ public class EMP : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            if (other.tag != "Player")
+            {
+                Destroy(other.gameObject);
+            }
+        }
+
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        
+    }
+
 }
