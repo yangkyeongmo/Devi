@@ -29,7 +29,6 @@ public class TurretShoot : MonoBehaviour {
                     nextValue += shootInterval;
                 }
             }
-            Debug.Log("Called after shooting");
         }
         else if (Input.GetKey(KeyCode.Space) != true)
         {
