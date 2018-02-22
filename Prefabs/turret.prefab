@@ -123,4 +123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d3057c9efb1c9a45b3a20f1310d447b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shot: {fileID: 0}
+  shot: {fileID: 1505703090551356, guid: b276a1ed8e65cc14e9a2f5c4f900c510, type: 2}
+  shootInterval: 1
+  shotSpeed: 0
