@@ -50,7 +50,7 @@ public class newDivideZones : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        debugText.text = ("delTheta: " + delTheta + "\ndelPhi: " + delPhi);
+        /*debugText.text = ("delTheta: " + delTheta + "\ndelPhi: " + delPhi);
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
@@ -72,7 +72,7 @@ public class newDivideZones : MonoBehaviour {
         {
             transform.Rotate(Vector3.right, -20.0f);
             delTheta += 20.0f;
-        }
+        }*/
         if (Input.GetMouseButtonDown(0))
         {
             GetSpinnedSphericalMousePosition();
