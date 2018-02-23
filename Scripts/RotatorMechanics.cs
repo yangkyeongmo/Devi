@@ -19,6 +19,8 @@ public class RotatorMechanics : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        rb.velocity = rbP.velocity;
+        rb.transform.position = player.transform.position + player.transform.up * 5.5f;
         if (Input.GetKey(KeyCode.RightArrow))
         {
             if (rb.angularVelocity.y < 10.0f)

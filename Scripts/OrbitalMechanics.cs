@@ -87,7 +87,6 @@ public class OrbitalMechanics : MonoBehaviour {
         v = next_v;
 
         ConvertFromOrbitalElements();
-
         transform.position = next_position;
         rb.velocity = next_velocity;
 
