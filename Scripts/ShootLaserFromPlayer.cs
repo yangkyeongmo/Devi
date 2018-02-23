@@ -6,12 +6,14 @@ public class ShootLaserFromPlayer : MonoBehaviour {
 
     private LineRenderer line;
     private GameObject confrontedEnemy;
-    private ParticleSystem laserSpark;
+    //private GameObject laserSpark;
 
 	// Use this for initialization
 	void Start () {
         line = GetComponent<LineRenderer>();
         line.enabled = false;
+        //laserSpark = transform.Find("LaserSpark").gameObject;
+        //laserSpark.SetActive(false);
 	}
 
     // Update is called once per frame
@@ -27,15 +29,27 @@ public class ShootLaserFromPlayer : MonoBehaviour {
     IEnumerator ShootToEnemy()
     {
         line.enabled = true;
+        //laserSpark.SetActive(true);
         while (confrontedEnemy != null)
         {
             Ray ray = new Ray(transform.position, transform.position - confrontedEnemy.transform.position);
+            RaycastHit hit;
             line.SetPosition(0, transform.position);
-            line.SetPosition(1, confrontedEnemy.transform.position);
+
+            if(Physics.Raycast(ray, out hit, 10))
+            {
+                line.SetPosition(1, hit.transform.position);
+                //laserSpark.transform.position = hit.transform.position;
+            }
+            else
+            {
+                line.SetPosition(1, confrontedEnemy.transform.position);
+            }
             
             yield return null;
         }
         line.enabled = false;
+        //laserSpark.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
