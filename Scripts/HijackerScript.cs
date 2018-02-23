@@ -7,6 +7,7 @@ public class HijackerScript : MonoBehaviour {
     public float redirectionSpeed;
 
     private List<GameObject> enemies;
+    private float thisTime;
 
 	// Use this for initialization
 	void Start ()
@@ -19,6 +20,7 @@ public class HijackerScript : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.H))
         {
+            thisTime = Time.time;
             Redirection();
             //DestroyEnemies();
         }

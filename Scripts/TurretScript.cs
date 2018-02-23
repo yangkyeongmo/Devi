@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretShoot : MonoBehaviour {
+public class TurretScript : MonoBehaviour {
 
     public GameObject shot;
     public float shootInterval;
@@ -18,14 +18,22 @@ public class TurretShoot : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        Shoot();
+    }
+
+    void Shoot()
+    {
         if (Input.GetKey(KeyCode.Space))
         {
             spacePressed = true;
             if (spacePressed)
             {
-                if(Time.time >= nextValue)
+                if (Time.time >= nextValue)
                 {
-                    Shoot();
+                    GameObject instshot = Instantiate(shot, transform.position + transform.up * 3.5f, Quaternion.LookRotation(transform.up));
+                    instshot.transform.up = transform.up;
+                    Rigidbody rb = instshot.GetComponent<Rigidbody>();
+                    rb.velocity = transform.up * shotSpeed;
                     nextValue += shootInterval;
                 }
             }
@@ -34,13 +42,5 @@ public class TurretShoot : MonoBehaviour {
         {
             spacePressed = false;
         }
-    }
-
-    void Shoot()
-    {
-        GameObject instshot = Instantiate(shot, transform.position + transform.up * 3.5f, Quaternion.LookRotation(transform.up));
-        instshot.transform.up = transform.up;
-        Rigidbody rb = instshot.GetComponent<Rigidbody>();
-        rb.velocity = transform.up * shotSpeed;
     }
 }
