@@ -8,17 +8,27 @@ public class TurretScript : MonoBehaviour {
     public float shootInterval;
     public float shotSpeed;
 
+    private Animator animator;
+    private bool isSettled = false;
     private bool spacePressed;
     private float firstValue, nextValue;
+    
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
+        animator = transform.Find("default").GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        Shoot();
+        if (animator.IsInTransition(0) &&
+            //if next state is "TurretDefault"
+            )
+            isSettled = true;
+        if(isSettled)
+            Shoot();
     }
 
     void Shoot()
