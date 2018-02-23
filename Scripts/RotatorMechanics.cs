@@ -9,18 +9,20 @@ public class RotatorMechanics : MonoBehaviour {
     private Rigidbody rb;
     private Rigidbody rbP;
     private GameObject player;
+    private Vector3 initialPosition;
 
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
         player = GameObject.FindWithTag("Player");
         rbP = player.GetComponent<Rigidbody>();
+        initialPosition = transform.localPosition;
 	}
 	
 	// Update is called once per frame
 	void Update () {
         rb.velocity = rbP.velocity;
-        rb.transform.position = player.transform.position + player.transform.up * 5.5f;
+        transform.localPosition = initialPosition;
         if (Input.GetKey(KeyCode.RightArrow))
         {
             if (rb.angularVelocity.y < 10.0f)
@@ -41,16 +43,16 @@ public class RotatorMechanics : MonoBehaviour {
         {
             if (rb.angularVelocity.x < 10.0f)
             {
-                rb.angularVelocity += new Vector3(rotateSpeed, 0, 0);
-                rbP.angularVelocity = rb.angularVelocity * 0.1f;
+                rb.angularVelocity += new Vector3(0, rotateSpeed, 0);
+                rbP.angularVelocity += new Vector3(rotateSpeed, 0, 0) * 0.1f;
             }
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
             if (rb.angularVelocity.x > -10.0f)
             {
-                rb.angularVelocity += new Vector3(-rotateSpeed, 0, 0);
-                rbP.angularVelocity = rb.angularVelocity * 0.1f;
+                rb.angularVelocity += new Vector3(0, -rotateSpeed, 0);
+                rbP.angularVelocity += new Vector3(-rotateSpeed, 0, 0) * 0.1f;
             }
         }
         else if (Input.GetKey(KeyCode.None))
@@ -58,7 +60,5 @@ public class RotatorMechanics : MonoBehaviour {
             rb.angularVelocity = Vector3.zero;
             rbP.angularVelocity = Vector3.zero;
         }
-        Debug.Log("Rotator: " + rb.angularVelocity);
-        Debug.Log("Player: " + rbP.angularVelocity);
     }
 }
