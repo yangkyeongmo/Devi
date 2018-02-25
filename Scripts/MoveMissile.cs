@@ -7,6 +7,7 @@ public class MoveMissile : MonoBehaviour {
     public float initialSpeed;
     public float modifier;
     public GameObject marker;
+    public float destructionRate;
     
     private Transform earthCore;
     private Vector3 playerPosition;
@@ -47,6 +48,8 @@ public class MoveMissile : MonoBehaviour {
         if(collision.collider.tag == "Player")
         {
             Destroy(this.gameObject);
+            Rigidbody rb = collision.rigidbody;
+            rb.mass -= destructionRate;
         }
     }
 }

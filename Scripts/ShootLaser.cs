@@ -38,17 +38,21 @@ public class ShootLaser : MonoBehaviour {
             RaycastHit hit;
             line.SetPosition(0, transform.position);
 
-            if(Physics.Raycast(ray, out hit, 10))
+            /*if(Physics.Raycast(ray, out hit, 10))
             {
-                line.SetPosition(1, hit.transform.position);
-                //laserSpark.transform.position = hit.transform.position;
-                Rigidbody rb = hit.rigidbody;
-                rb.mass -= destructionRate;
+                if(hit.transform.tag != "Player")
+                {
+                    line.SetPosition(1, hit.transform.position);
+                    Debug.Log(hit.transform.name);
+                    //laserSpark.transform.position = hit.transform.position;
+                    Rigidbody rb = hit.rigidbody;
+                    rb.mass -= destructionRate;
+                }
             }
             else
-            {
+            {*/
                 line.SetPosition(1, confrontedEnemy.transform.position);
-            }
+            //}
             
             yield return null;
         }
