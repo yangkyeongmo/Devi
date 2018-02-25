@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ShootLaser : MonoBehaviour {
 
+    public float destructionRate;
+    
     private LineRenderer line;
     private GameObject confrontedEnemy;
     //private GameObject laserSpark;
@@ -40,6 +42,8 @@ public class ShootLaser : MonoBehaviour {
             {
                 line.SetPosition(1, hit.transform.position);
                 //laserSpark.transform.position = hit.transform.position;
+                Rigidbody rb = hit.rigidbody;
+                rb.mass -= destructionRate;
             }
             else
             {
