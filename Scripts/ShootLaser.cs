@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShootLaserFromPlayer : MonoBehaviour {
+public class ShootLaser : MonoBehaviour {
 
     private LineRenderer line;
     private GameObject confrontedEnemy;

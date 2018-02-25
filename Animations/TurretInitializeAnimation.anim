@@ -112,8 +112,8 @@ AnimationClip:
   m_GenerateMotionCurves: 0
   m_Events:
   - time: 1.5
-    functionName: 
-    data: 
+    functionName: TurretIsInitialized
+    data: TurretInitialized
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

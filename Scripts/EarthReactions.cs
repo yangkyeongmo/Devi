@@ -11,11 +11,13 @@ public class EarthReactions : MonoBehaviour {
     private Transform selectedLaunchPosition;
     private int timeNow;
     private int timeNext;
+    private List<GameObject> laserSatellites;
 
 	// Use this for initialization
 	void Start () {
         timeNow = (int)Time.time;
         timeNext = timeNow;
+        laserSatellites = new List<GameObject>();
 	}
 	
 	// Update is called once per frame
@@ -34,5 +36,10 @@ public class EarthReactions : MonoBehaviour {
         selectedLaunchPosition = launchPosition[randomCount];
         Instantiate(attackMissile, selectedLaunchPosition.position, Quaternion.identity);
         Debug.Log("Attack Missile Launched at : Position" + randomCount);
+    }
+    
+    void FindSatellites()
+    {
+        laserSatellites.Add(transform.Find("LaserSatellite").gameObject);
     }
 }
