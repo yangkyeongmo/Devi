@@ -7,13 +7,18 @@ using UnityEngine;
 public class CreateBuildings : MonoBehaviour
 {
     public GameObject railgunTurret;
+    public GameObject defenseTurret;
 
+    private bool isBuildingButtonClicked = false;
     private bool isTurretButtonClicked = false;
+    private bool isDefenseTurretButtonClicked = false;
     private bool isSetZoneOccupiedArray = false;
 
     private GameObject player;
     private newDivideZones dz;
     private int[] zoneOccupied;
+    private int selectedZone;
+    private GameObject selectedMidPoint;
 
     // Use this for initialization
     void Start()
@@ -32,23 +37,45 @@ public class CreateBuildings : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isTurretButtonClicked)
+        DeployBuilding();
+    }
+
+    void DeployBuilding()
+    {
+        if (isBuildingButtonClicked)
         {
             if (Input.GetMouseButtonDown(0))
             {
-                int selectedZone = dz.GetSelectedZoneNumber();
-                GameObject selectedMidPoint = GameObject.Find("MidPoint" + selectedZone);
+                selectedZone = dz.GetSelectedZoneNumber();
+                selectedMidPoint = GameObject.Find("MidPoint" + selectedZone);
                 Debug.Log(selectedMidPoint.name);
-                GameObject spawnedTurret = Instantiate(railgunTurret, selectedMidPoint.transform.position, Quaternion.identity);
-                spawnedTurret.transform.parent = selectedMidPoint.transform;
-                spawnedTurret.transform.up = - player.transform.position + spawnedTurret.transform.position;
-                spawnedTurret.transform.position -= spawnedTurret.transform.up * 3.5f;
-                SetZoneOccupied(selectedZone);
-                isTurretButtonClicked = false;
+
+                GameObject selectedBuilding = new GameObject();
+                if (isTurretButtonClicked)
+                    selectedBuilding = railgunTurret;
+                if (isDefenseTurretButtonClicked)
+                    selectedBuilding = defenseTurret;
+
+                if (zoneOccupied[selectedZone] == 0)
+                {
+                    GameObject spawnedBuilding = Instantiate(selectedBuilding, selectedMidPoint.transform.position, Quaternion.identity);
+                    spawnedBuilding.transform.parent = selectedMidPoint.transform;
+                    spawnedBuilding.transform.up = -player.transform.position + spawnedBuilding.transform.position;
+                    spawnedBuilding.transform.position -= spawnedBuilding.transform.up * 3.5f;
+
+                    SetZoneOccupied(selectedZone);
+                    isTurretButtonClicked = false;
+                    isDefenseTurretButtonClicked = false;
+                    isBuildingButtonClicked = false;
+                }
+                else if (zoneOccupied[selectedZone] == 1)
+                    Debug.Log("Selected zone is already occupied by another building");
+                else
+                    Debug.Log("Unknown zoneOccupied[] ERROR");
             }
         }
     }
-
+    
     private void SetZoneOccupied(int num)
     {
         zoneOccupied[num] = 1;
@@ -57,6 +84,13 @@ public class CreateBuildings : MonoBehaviour
     public void SetTurretOnTrue()
     {
         isTurretButtonClicked = true;
+        isBuildingButtonClicked = true;
+    }
+
+    public void SetDefenseTurretOnTrue()
+    {
+        isDefenseTurretButtonClicked = true;
+        isBuildingButtonClicked = true;
     }
 
     public int[] GetOccupyInfo()
