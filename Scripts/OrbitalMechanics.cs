@@ -98,7 +98,7 @@ public class OrbitalMechanics : MonoBehaviour {
             nextTime = firstTime + 1;
         }
 
-        //initialUpdate = false;
+        initialUpdate = false;
     }
 
     void ConvertToOrbitalElements()
