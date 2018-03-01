@@ -8,10 +8,12 @@ public class CreateBuildings : MonoBehaviour
 {
     public GameObject railgunTurret;
     public GameObject defenseTurret;
+    public GameObject Hijacker;
 
     private bool isBuildingButtonClicked = false;
     private bool isTurretButtonClicked = false;
     private bool isDefenseTurretButtonClicked = false;
+    private bool isHijackerButtonClicked = false;
     private bool isSetZoneOccupiedArray = false;
 
     private GameObject player;

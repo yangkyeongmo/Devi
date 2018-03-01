@@ -119,6 +119,10 @@ public class OrbitalMechanics : MonoBehaviour {
         {
             w = -w;
         }
+        if(vector_e == Vector3.zero)
+        {
+            w = 0;
+        }
         if (e != 0)
         {
             v = Mathf.Acos(Vector3.Dot(vector_e.normalized, init_position.normalized));
