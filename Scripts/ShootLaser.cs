@@ -34,25 +34,21 @@ public class ShootLaser : MonoBehaviour {
         //laserSpark.SetActive(true);
         while (confrontedEnemy != null)
         {
-            Ray ray = new Ray(transform.position, transform.position - confrontedEnemy.transform.position);
+            Ray ray = new Ray(transform.position, confrontedEnemy.transform.position - transform.position);
             RaycastHit hit;
             line.SetPosition(0, transform.position);
 
-            /*if(Physics.Raycast(ray, out hit, 10))
+            if(Physics.Raycast(ray, out hit, 10))
             {
-                if(hit.transform.tag != "Player")
-                {
-                    line.SetPosition(1, hit.transform.position);
-                    Debug.Log(hit.transform.name);
-                    //laserSpark.transform.position = hit.transform.position;
-                    Rigidbody rb = hit.rigidbody;
-                    rb.mass -= destructionRate;
-                }
+                line.SetPosition(1, hit.transform.position);
+                //laserSpark.transform.position = hit.transform.position;
+                Rigidbody rb = hit.rigidbody;
+                rb.mass -= destructionRate;
             }
             else
-            {*/
+            {
                 line.SetPosition(1, confrontedEnemy.transform.position);
-            //}
+            }
             
             yield return null;
         }
@@ -62,18 +58,12 @@ public class ShootLaser : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if(confrontedEnemy == null)
-        {
-            confrontedEnemy = other.gameObject;
-        }
+        AddEnemy(other);
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (confrontedEnemy == null)
-        {
-            confrontedEnemy = other.gameObject;
-        }
+        AddEnemy(other);
     }
 
     private void OnTriggerExit(Collider other)
@@ -84,4 +74,12 @@ public class ShootLaser : MonoBehaviour {
         }
     }
 
+    void AddEnemy(Collider other)
+    {
+        if (confrontedEnemy == null)
+        {
+            if (other.name != "Earth" && other.tag != "Player")
+                confrontedEnemy = other.gameObject;
+        }
+    }
 }
