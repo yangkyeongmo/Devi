@@ -64,5 +64,4 @@ public class GameControl : MonoBehaviour {
         cp.SetVelocity(v);
         cp.SetMass(m);
     }
-
 }

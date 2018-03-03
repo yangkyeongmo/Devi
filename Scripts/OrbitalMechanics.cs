@@ -9,6 +9,7 @@ public class OrbitalMechanics : MonoBehaviour {
     public GameObject largerMass;
 
     public float e;
+    public int debug_updateTimes;
 
     private GameObject markerParent;
     private Vector3 first_velocity;
@@ -27,6 +28,8 @@ public class OrbitalMechanics : MonoBehaviour {
     private CelestialProperties lm_cp;
     private Rigidbody rb;
     private int firstTime, nextTime;
+
+    private int updateTimes = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -65,17 +68,18 @@ public class OrbitalMechanics : MonoBehaviour {
         if (initialUpdate)
         {
             ConvertToOrbitalElements();
+            updateTimes++;
         }
 
         E = Mathf.Atan(Mathf.Sqrt((1 - e) / (1 + e)) * Mathf.Tan(v / 2)) * 2;
         M = E - e * Mathf.Sin(E);
         next_M = M + Mathf.Sqrt(mu / Mathf.Pow(a, 3)) * Time.deltaTime;
         k = 0;
-        while(next_M >= 2 * Mathf.PI)
+        /*while(next_M >= 2 * Mathf.PI)
         {
             next_M -= 2 * Mathf.PI;
             k++;
-        }
+        }*/
         for(int i=0; i<10; i++)
         {
             next_E = next_M + e * Mathf.Sin(E);
@@ -98,7 +102,10 @@ public class OrbitalMechanics : MonoBehaviour {
             nextTime = firstTime + 1;
         }
 
-        initialUpdate = false;
+        if(updateTimes == debug_updateTimes)
+        {
+            initialUpdate = false;
+        }
     }
 
     void ConvertToOrbitalElements()

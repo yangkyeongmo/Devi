@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb7c0b934cf0b284ea0b6b568a7a9568, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  earth: {fileID: 945232460}
+  earth: {fileID: 908002614}
   moon: {fileID: 1807959402}
   satelliteVelocity: 1
   satelliteMass: 1
@@ -640,6 +640,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 908002615}
+  - component: {fileID: 908002618}
+  - component: {fileID: 908002617}
+  - component: {fileID: 908002616}
   m_Layer: 0
   m_Name: Earth
   m_TagString: Untagged
@@ -661,37 +664,63 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &945232460 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100002, guid: 33e058ddb1683294884bb04fd7bfeff2, type: 3}
-  m_PrefabInternal: {fileID: 2001104314}
---- !u!114 &945232461
+--- !u!135 &908002616
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 908002614}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 17
+  m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!114 &908002617
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 945232460}
+  m_GameObject: {fileID: 908002614}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0c160e9b35f7934c94b0f49e08f389d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  launchPosition:
+  - {fileID: 2131314247}
+  - {fileID: 1394617316}
+  - {fileID: 239172253}
+  - {fileID: 985956703}
+  - {fileID: 265579060}
+  - {fileID: 203039948}
+  - {fileID: 1872459096}
+  - {fileID: 1298075481}
+  - {fileID: 1906203242}
+  - {fileID: 1724954194}
+  - {fileID: 2047544738}
+  attackMissile: {fileID: 1652185861644542, guid: 2fa4291b11632184dbc77cde93106094,
+    type: 2}
+  missileSpawnInterval: 20
+--- !u!114 &908002618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 908002614}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4efb22d35e3725c4cbf1c4af94713874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &945232460 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100002, guid: 33e058ddb1683294884bb04fd7bfeff2, type: 3}
+  m_PrefabInternal: {fileID: 2001104314}
 --- !u!4 &945232462 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400002, guid: 33e058ddb1683294884bb04fd7bfeff2, type: 3}
   m_PrefabInternal: {fileID: 2001104314}
---- !u!135 &945232463
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 945232460}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &945232464
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -724,32 +753,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &945232466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 945232460}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0c160e9b35f7934c94b0f49e08f389d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  launchPosition:
-  - {fileID: 2131314247}
-  - {fileID: 1394617316}
-  - {fileID: 239172253}
-  - {fileID: 985956703}
-  - {fileID: 265579060}
-  - {fileID: 203039948}
-  - {fileID: 1872459096}
-  - {fileID: 1298075481}
-  - {fileID: 1906203242}
-  - {fileID: 1724954194}
-  - {fileID: 2047544738}
-  attackMissile: {fileID: 1652185861644542, guid: 2fa4291b11632184dbc77cde93106094,
-    type: 2}
-  missileSpawnInterval: 20
 --- !u!1 &985956702
 GameObject:
   m_ObjectHideFlags: 0
@@ -1893,6 +1896,7 @@ GameObject:
   - component: {fileID: 1807959408}
   - component: {fileID: 1807959407}
   - component: {fileID: 1807959409}
+  - component: {fileID: 1807959410}
   m_Layer: 0
   m_Name: Moon
   m_TagString: Player
@@ -2003,6 +2007,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 6.1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1807959410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1807959402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de0da0fc262b33e40b77e93d32028e4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  earth: {fileID: 908002614}
+  coeff_G: 1
 --- !u!1 &1872459095
 GameObject:
   m_ObjectHideFlags: 0
