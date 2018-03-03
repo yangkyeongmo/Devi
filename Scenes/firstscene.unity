@@ -1934,10 +1934,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   marker: {fileID: 1601098406795164, guid: d939c281a2c309a4b8ad6a6ac9d753a3, type: 2}
-  firstVelocityDirection: {x: -1, y: 100, z: 0}
+  firstVelocityDirection: {x: 0, y: 1, z: 0}
   firstVelocityMagnitude: 3
   largerMass: {fileID: 908002614}
   e: 0
+  G: 100000
+  debug_updateTimes: 5
 --- !u!114 &1807959405
 MonoBehaviour:
   m_ObjectHideFlags: 0
