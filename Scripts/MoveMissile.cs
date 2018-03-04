@@ -9,7 +9,7 @@ public class MoveMissile : MonoBehaviour {
     public GameObject marker;
     public float destructionRate;
     
-    private Transform earthCore;
+    private Transform earth;
     private Vector3 playerPosition;
     private Rigidbody rb;
     private float speed;
@@ -17,10 +17,10 @@ public class MoveMissile : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        earthCore = GameObject.Find("earthCore").transform;
+        earth = GameObject.Find("Earth").transform;
         rb = GetComponent<Rigidbody>();
         rb.velocity = transform.up * initialSpeed;
-        transform.up = (transform.position - earthCore.position).normalized;
+        transform.up = (transform.position - earth.position).normalized;
 	}
 	
 	// Update is called once per frame
@@ -30,7 +30,7 @@ public class MoveMissile : MonoBehaviour {
         playerPosition = GameObject.FindWithTag("Player").transform.position;
         speed = rb.velocity.magnitude;
         direction = (transform.up + (playerPosition - transform.position).normalized * modifier).normalized;
-        if((transform.position - earthCore.position).magnitude < 20)
+        if((transform.position - earth.position).magnitude < 20)
         {
             direction += transform.up;
             direction = direction.normalized;

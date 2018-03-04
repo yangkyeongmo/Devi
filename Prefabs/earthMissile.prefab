@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 114245700463716990}
   - component: {fileID: 54318111774581752}
   - component: {fileID: 136996530480042772}
+  - component: {fileID: 114331353120478828}
   m_Layer: 0
   m_Name: earthMissile
   m_TagString: Untagged
@@ -289,6 +290,18 @@ MonoBehaviour:
   initialSpeed: 5
   modifier: 1
   marker: {fileID: 1601098406795164, guid: d939c281a2c309a4b8ad6a6ac9d753a3, type: 2}
+  destructionRate: 0
+--- !u!114 &114331353120478828
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1652185861644542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40ea0208aac995b48bcf17b3af762514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &136996530480042772
 CapsuleCollider:
   m_ObjectHideFlags: 1
