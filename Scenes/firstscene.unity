@@ -1928,14 +1928,14 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1807959402}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4891a140f48f5b049a7c9e3550aaf8d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   marker: {fileID: 1601098406795164, guid: d939c281a2c309a4b8ad6a6ac9d753a3, type: 2}
   firstVelocityDirection: {x: 0, y: 1, z: 0}
-  firstVelocityMagnitude: 3
+  firstVelocityMagnitude: 5
   largerMass: {fileID: 908002614}
   e: 0
   G: 100000
@@ -2021,7 +2021,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   earth: {fileID: 908002614}
-  coeff_G: 1
+  coeff_G: 100000
+  initialSpeedDirection: {x: 0, y: 1, z: 0}
+  initialSpeed: 40
+  marker: {fileID: 1601098406795164, guid: d939c281a2c309a4b8ad6a6ac9d753a3, type: 2}
 --- !u!1 &1872459095
 GameObject:
   m_ObjectHideFlags: 0

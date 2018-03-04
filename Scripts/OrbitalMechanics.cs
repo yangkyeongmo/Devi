@@ -60,8 +60,7 @@ public class OrbitalMechanics : MonoBehaviour {
 	void Update ()
     {
         Debug.Log("----------------------------------");
-        PositionUpdateAlgorithm();  
-        Debug.Log("----------------------------------");                                                                                    //move as its orbit if collision not detected
+        PositionUpdateAlgorithm();                                                                                      //move as its orbit if collision not detected
         //if(isCollisionDetected){                                                                                      //move as its new orbit if collision detected
         //blah blah... start from beginning and sustain its collision force
         //}
@@ -89,6 +88,7 @@ public class OrbitalMechanics : MonoBehaviour {
             next_E = next_M + e * Mathf.Sin(E);
             E = next_E;
         }
+        Debug.Log("E: " + E);
         next_v = Mathf.Atan(Mathf.Sqrt((1 + e) / (1 - e)) * Mathf.Tan(next_E / 2)) * 2;
         v = next_v;
         Debug.Log("next v is: " + v);
