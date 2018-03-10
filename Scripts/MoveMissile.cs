@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class MoveMissile : MonoBehaviour {
 
-    public float initialSpeed;
-    public float modifier;
     public GameObject marker;
     public float destructionRate;
-    public float detourRange;
+    public float detourRange, initializingRange, deceleratingRange;
+    public float minSpeed, approachSpeed, maxSpeed;
+    public float accelerateRate;
+    public float turnModifier;
 
     private GuideMissileAI gm;
     private Transform earth;
     private Transform destinationZoneTransform;
     private Vector3 playerPosition;
     private float distanceFromEarth;
+    private float distanceFromPlayer;
     private Rigidbody rb;
-    private float speed;
+    private float speed = 0;
     private Vector3 direction;
 
     // Use this for initialization
@@ -26,7 +28,6 @@ public class MoveMissile : MonoBehaviour {
         destinationZoneTransform = GameObject.Find("MidPoint" + Random.Range(0, 50)).transform;
         Debug.Log("Destination of " + gameObject.name + "is " + destinationZoneTransform.name);
         rb = GetComponent<Rigidbody>();
-        rb.velocity = transform.up * initialSpeed;
         transform.up = (transform.position - earth.position).normalized;
 	}
 	
@@ -35,35 +36,66 @@ public class MoveMissile : MonoBehaviour {
     {
         playerPosition = GameObject.FindWithTag("Player").transform.position;
         distanceFromEarth = (transform.position - earth.position).magnitude;
-        speed = rb.velocity.magnitude;
+        SetSpeed();
         if (gm.GetIsDetouring() == false)
         {
-            if (distanceFromEarth < 25.0f)
-            {
-                direction = transform.up;
-            }
-
-            if (distanceFromEarth > 25.0f)
-            {
-
-                if (direction != (transform.up + (playerPosition - transform.position).normalized * modifier).normalized
-                    //direction.x <= (transform.up + (playerPosition - transform.position).normalized * modifier).normalized.x
-                    //&& direction.y <= (transform.up + (playerPosition - transform.position).normalized * modifier).normalized.y
-                    //&& direction.z <= (transform.up + (playerPosition - transform.position).normalized * modifier).normalized.z)
-                    )
-                {
-                    direction += (playerPosition - transform.position).normalized * modifier;
-                }
-                transform.up = direction;
-            }
-
-            direction = direction.normalized;
+            SetDirection();
             rb.velocity = speed * direction;
         }
 
         //leave marker to visualize trajectory(for debug)
         GameObject mark = Instantiate(marker, transform);
         mark.transform.parent = GameObject.Find("StaticParent").transform;
+    }
+
+    void SetSpeed()
+    {
+        distanceFromPlayer = (transform.position - playerPosition).magnitude;
+        if(distanceFromEarth < initializingRange)
+        {
+            if(speed < minSpeed)
+            {
+                speed += accelerateRate;
+            }
+        }
+        else if(distanceFromPlayer > deceleratingRange)
+        {
+            if(speed < maxSpeed)
+            {
+                speed += accelerateRate;
+            }
+        }
+        else if (distanceFromPlayer < deceleratingRange)
+        {
+            if (speed < approachSpeed)
+            {
+                speed -= accelerateRate;
+            }
+        }
+    }
+
+    void SetDirection()
+    {
+        if (distanceFromEarth < initializingRange)
+        {
+            direction = transform.up;
+        }
+
+        if (distanceFromEarth > initializingRange)
+        {
+
+            if (direction != (transform.up + (playerPosition - transform.position).normalized * turnModifier).normalized
+                //direction.x <= (transform.up + (playerPosition - transform.position).normalized * modifier).normalized.x
+                //&& direction.y <= (transform.up + (playerPosition - transform.position).normalized * modifier).normalized.y
+                //&& direction.z <= (transform.up + (playerPosition - transform.position).normalized * modifier).normalized.z)
+                )
+            {
+                direction += (playerPosition - transform.position).normalized * turnModifier;
+            }
+            transform.up = direction;
+        }
+
+        direction = direction.normalized;
     }
 
     void DetourToDestination()
