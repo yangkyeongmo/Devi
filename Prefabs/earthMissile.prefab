@@ -287,10 +287,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20a3d9bb092252240ba1bc4e2959423a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialSpeed: 5
-  modifier: 1
   marker: {fileID: 1601098406795164, guid: d939c281a2c309a4b8ad6a6ac9d753a3, type: 2}
   destructionRate: 0
+  detourRange: 0
+  initializingRange: 25
+  deceleratingRange: 25
+  minSpeed: 3
+  approachSpeed: 0.1
+  maxSpeed: 10
+  accelerateRate: 0.1
+  turnModifier: 0.05
 --- !u!114 &114331353120478828
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -45,6 +45,7 @@ public class newDivideZones : MonoBehaviour {
         //Debug.Log("Draw Complete");
 
         SetMidPoints();
+        SetZoneTexts();
     }
 	
 	// Update is called once per frame
@@ -80,6 +81,7 @@ public class newDivideZones : MonoBehaviour {
         }
     }
 
+    /*
     //for test drawing
     void DrawLatitudeLine(float rad, float thetaInterval_rad, float interval)
     {
@@ -127,6 +129,7 @@ public class newDivideZones : MonoBehaviour {
             parentobj.transform.parent = testSubject.transform;
         }
     }
+    */
 
     void SphericalToCartesian(float rad, float theta, float phi)
     {
@@ -300,5 +303,23 @@ public class newDivideZones : MonoBehaviour {
         midPoint.transform.position = testSubject.transform.position + new Vector3(x, y, z);
         midPoint.transform.parent = midPoint_parent.transform;
         midPoint.name = "MidPoint49";
+    }
+
+    void SetZoneTexts()
+    {
+        for(int i=0; i<50; i++)
+        {
+            GameObject zoneText = new GameObject();
+            Transform midpoint_transform = GameObject.Find("MidPoint" + i).transform;
+            zoneText.transform.SetParent(midpoint_transform);
+            zoneText.transform.position = midpoint_transform.position + (midpoint_transform.position - testSubject.transform.position).normalized * 0.5f;
+            zoneText.transform.LookAt(midpoint_transform);
+            zoneText.AddComponent<TextMesh>();
+            TextMesh txt = zoneText.GetComponent<TextMesh>();
+            txt.text = "Zone " + i;
+            txt.anchor = TextAnchor.MiddleCenter;
+            txt.color = Color.black;
+            txt.characterSize = 0.5f;
+        }
     }
 }
