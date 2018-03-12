@@ -11,6 +11,7 @@ public class newDivideZones : MonoBehaviour {
     public float testScale;
     public GameObject dot;
     public Text debugText;
+    public GameObject zone3DText;
 
     private GameObject debugLongitudeObject;
 
@@ -309,17 +310,13 @@ public class newDivideZones : MonoBehaviour {
     {
         for(int i=0; i<50; i++)
         {
-            GameObject zoneText = new GameObject();
+            GameObject zoneText = Instantiate(zone3DText);
             Transform midpoint_transform = GameObject.Find("MidPoint" + i).transform;
             zoneText.transform.SetParent(midpoint_transform);
             zoneText.transform.position = midpoint_transform.position + (midpoint_transform.position - testSubject.transform.position).normalized * 0.5f;
             zoneText.transform.LookAt(midpoint_transform);
-            zoneText.AddComponent<TextMesh>();
             TextMesh txt = zoneText.GetComponent<TextMesh>();
             txt.text = "Zone " + i;
-            txt.anchor = TextAnchor.MiddleCenter;
-            txt.color = Color.black;
-            txt.characterSize = 0.5f;
         }
     }
 }
