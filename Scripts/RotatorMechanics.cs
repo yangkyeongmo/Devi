@@ -28,7 +28,7 @@ public class RotatorMechanics : MonoBehaviour {
             if (rb.angularVelocity.y < 10.0f)
             {
                 rb.angularVelocity += new Vector3(0, rotateSpeed, 0);
-                rbP.angularVelocity = rb.angularVelocity * 0.1f;
+                rbP.angularVelocity += new Vector3(0, rotateSpeed, 0) * 0.1f;
             }
         }
         else if (Input.GetKey(KeyCode.LeftArrow))
@@ -36,7 +36,7 @@ public class RotatorMechanics : MonoBehaviour {
             if (rb.angularVelocity.y > -10.0f)
             {
                 rb.angularVelocity += new Vector3(0, -rotateSpeed, 0);
-                rbP.angularVelocity = rb.angularVelocity * 0.1f;
+                rbP.angularVelocity += new Vector3(0, -rotateSpeed, 0) * 0.1f;
             }
         }
         else if (Input.GetKey(KeyCode.UpArrow))

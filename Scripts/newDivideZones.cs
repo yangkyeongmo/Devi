@@ -311,12 +311,14 @@ public class newDivideZones : MonoBehaviour {
         for(int i=0; i<50; i++)
         {
             GameObject zoneText = Instantiate(zone3DText);
+            zoneText.name = "Text_Zone" + i;
             Transform midpoint_transform = GameObject.Find("MidPoint" + i).transform;
             zoneText.transform.SetParent(midpoint_transform);
             zoneText.transform.position = midpoint_transform.position + (midpoint_transform.position - testSubject.transform.position).normalized * 0.5f;
             zoneText.transform.LookAt(midpoint_transform);
             TextMesh txt = zoneText.GetComponent<TextMesh>();
             txt.text = "Zone " + i;
+            //zoneText.GetComponent<MeshRenderer>().enabled = false;
         }
     }
 }

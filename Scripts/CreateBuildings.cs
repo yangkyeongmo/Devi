@@ -50,7 +50,7 @@ public class CreateBuildings : MonoBehaviour
             {
                 selectedZone = dz.GetSelectedZoneNumber();
                 selectedMidPoint = GameObject.Find("MidPoint" + selectedZone);
-                Debug.Log(selectedMidPoint.name);
+                Debug.Log("Building created on " + selectedMidPoint.name);
 
                 GameObject selectedBuilding = new GameObject();
                 if (isTurretButtonClicked)
@@ -69,6 +69,7 @@ public class CreateBuildings : MonoBehaviour
                     isTurretButtonClicked = false;
                     isDefenseTurretButtonClicked = false;
                     isBuildingButtonClicked = false;
+                    Debug.Log("Building is " + selectedBuilding.name);
                 }
                 else if (zoneOccupied[selectedZone] == 1)
                     Debug.Log("Selected zone is already occupied by another building");
