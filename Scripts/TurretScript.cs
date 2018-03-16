@@ -9,8 +9,7 @@ public class TurretScript : MonoBehaviour {
     public float shotSpeed;
     
     private bool isSettled = false;
-    private bool spacePressed;
-    private float firstValue, nextValue;
+    private float nextTime;
     
 
 	// Use this for initialization
@@ -21,38 +20,25 @@ public class TurretScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if(isSettled)
-            Shoot();
+        if(isSettled) Shoot();
     }
 
     void Shoot()
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            spacePressed = true;
-            if (spacePressed)
+            if(Time.realtimeSinceStartup >= nextTime)
             {
-                if (Time.time >= nextValue)
-                {
-                    GameObject instshot = Instantiate(shot, transform.position + transform.up * 3.5f, Quaternion.LookRotation(transform.up));
-                    instshot.transform.up = transform.up;
-                    Rigidbody rb = instshot.GetComponent<Rigidbody>();
-                    rb.velocity = transform.up * shotSpeed;
-                    nextValue += shootInterval;
-                }
+                nextTime = Time.realtimeSinceStartup + shootInterval;
+                GameObject shot = Instantiate(this.shot, gameObject.transform.position + transform.up * 3.0f, Quaternion.LookRotation(transform.forward));
+                Rigidbody rb = shot.GetComponent<Rigidbody>();
+                rb.velocity = shotSpeed * transform.up;
             }
-        }
-        else if (Input.GetKey(KeyCode.Space) != true)
-        {
-            spacePressed = false;
         }
     }
 
     public void TurretIsInitialized(string message)
     {
-        if (message.Equals("TurretInitialized"))
-        {
-            isSettled = true;
-        }
+        if (message.Equals("TurretInitialized")) isSettled = true;
     }
 }
