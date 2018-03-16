@@ -22,6 +22,7 @@ public class newDivideZones : MonoBehaviour {
     private Quaternion lookRotation;
     private float delPhi = 0;
     private float delTheta = 0;
+    private bool isClickedOnPlayer = false;
 
     private Vector3 mousePosition_cart;
     private Vector3 mousePosition_sphe;
@@ -150,6 +151,7 @@ public class newDivideZones : MonoBehaviour {
 
             if (hit.collider.tag == "Player")
             {
+                SetIsClickedOnPlayer(0);
                 mousePosition_cart -= testSubject.transform.position;
                 Debug.Log("Cartesian Mouse Position = " + mousePosition_cart);
 
@@ -167,8 +169,23 @@ public class newDivideZones : MonoBehaviour {
             else if (hit.collider.tag != "Player")
             {
                 Debug.Log("Not clicked on player");
+                SetIsClickedOnPlayer(1);
             }
         }
+    }
+
+    private void SetIsClickedOnPlayer(int clicked)
+    {
+        if (clicked == 0)
+            isClickedOnPlayer = true;
+
+        if (clicked == 1)
+            isClickedOnPlayer = false;
+    }
+
+    public bool GetIsClickedOnPlayer()
+    {
+        return isClickedOnPlayer;
     }
 
     Vector3 CartesianToSpherical(Vector3 sc, Vector3 origin)

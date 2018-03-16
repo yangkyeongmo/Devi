@@ -48,33 +48,45 @@ public class CreateBuildings : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                selectedZone = dz.GetSelectedZoneNumber();
-                selectedMidPoint = GameObject.Find("MidPoint" + selectedZone);
-                Debug.Log("Building created on " + selectedMidPoint.name);
-
-                GameObject selectedBuilding = new GameObject();
-                if (isTurretButtonClicked)
-                    selectedBuilding = railgunTurret;
-                if (isDefenseTurretButtonClicked)
-                    selectedBuilding = defenseTurret;
-
-                if (zoneOccupied[selectedZone] == 0)
+                if (dz.GetIsClickedOnPlayer())
                 {
-                    GameObject spawnedBuilding = Instantiate(selectedBuilding, selectedMidPoint.transform.position, Quaternion.identity);
-                    spawnedBuilding.transform.parent = selectedMidPoint.transform;
-                    spawnedBuilding.transform.up = -player.transform.position + spawnedBuilding.transform.position;
-                    spawnedBuilding.transform.position -= spawnedBuilding.transform.up * 3.5f;
+                    selectedZone = dz.GetSelectedZoneNumber();
+                    selectedMidPoint = GameObject.Find("MidPoint" + selectedZone);
+                    Debug.Log("Building created on " + selectedMidPoint.name);
 
-                    SetZoneOccupied(selectedZone);
-                    isTurretButtonClicked = false;
-                    isDefenseTurretButtonClicked = false;
-                    isBuildingButtonClicked = false;
-                    Debug.Log("Building is " + selectedBuilding.name);
+                    if (zoneOccupied[selectedZone] == 0)
+                    {
+                        GameObject spawnedBuilding;
+
+                        if (isTurretButtonClicked)
+                            spawnedBuilding = Instantiate(railgunTurret, selectedMidPoint.transform.position, Quaternion.identity);
+                        else if (isDefenseTurretButtonClicked)
+                            spawnedBuilding = Instantiate(defenseTurret, selectedMidPoint.transform.position, Quaternion.identity);
+                        else if (isHijackerButtonClicked)
+                            spawnedBuilding = Instantiate(Hijacker, selectedMidPoint.transform.position, Quaternion.identity);
+                        else
+                        {
+                            spawnedBuilding = new GameObject();
+                            Debug.Log("Null Spawned Building");
+                        }
+                        spawnedBuilding.transform.parent = selectedMidPoint.transform;
+                        spawnedBuilding.transform.up = -player.transform.position + spawnedBuilding.transform.position;
+                        //spawnedBuilding.transform.position -= spawnedBuilding.transform.up * 3.5f;
+
+                        SetZoneOccupied(selectedZone);
+                        isTurretButtonClicked = false;
+                        isDefenseTurretButtonClicked = false;
+                        isBuildingButtonClicked = false;
+                        Debug.Log("Building is " + spawnedBuilding.name);
+                    }
+                    else if (zoneOccupied[selectedZone] == 1)
+                        Debug.Log("Selected zone is already occupied by another building");
+                    else
+                        Debug.Log("Unknown zoneOccupied[] ERROR");
                 }
-                else if (zoneOccupied[selectedZone] == 1)
-                    Debug.Log("Selected zone is already occupied by another building");
-                else
-                    Debug.Log("Unknown zoneOccupied[] ERROR");
+
+                else if (dz.GetIsClickedOnPlayer() == false)
+                    Debug.Log("Can't build: Not Clicked on Player");
             }
         }
     }
@@ -93,6 +105,12 @@ public class CreateBuildings : MonoBehaviour
     public void SetDefenseTurretOnTrue()
     {
         isDefenseTurretButtonClicked = true;
+        isBuildingButtonClicked = true;
+    }
+
+    public void SetHijackerOnTrue()
+    {
+        isHijackerButtonClicked = true;
         isBuildingButtonClicked = true;
     }
 
