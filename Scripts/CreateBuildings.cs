@@ -8,12 +8,14 @@ public class CreateBuildings : MonoBehaviour
 {
     public GameObject railgunTurret;
     public GameObject defenseTurret;
-    public GameObject Hijacker;
+    public GameObject hijacker;
+    public GameObject engine;
 
     private bool isBuildingButtonClicked = false;
     private bool isTurretButtonClicked = false;
     private bool isDefenseTurretButtonClicked = false;
     private bool isHijackerButtonClicked = false;
+    private bool isEngineButtonClicked = false;
     private bool isSetZoneOccupiedArray = false;
 
     private GameObject player;
@@ -63,7 +65,9 @@ public class CreateBuildings : MonoBehaviour
                         else if (isDefenseTurretButtonClicked)
                             spawnedBuilding = Instantiate(defenseTurret, selectedMidPoint.transform.position, Quaternion.identity);
                         else if (isHijackerButtonClicked)
-                            spawnedBuilding = Instantiate(Hijacker, selectedMidPoint.transform.position, Quaternion.identity);
+                            spawnedBuilding = Instantiate(hijacker, selectedMidPoint.transform.position, Quaternion.identity);
+                        else if (isEngineButtonClicked)
+                            spawnedBuilding = Instantiate(engine, selectedMidPoint.transform.position, Quaternion.identity);
                         else
                         {
                             spawnedBuilding = new GameObject();
@@ -111,6 +115,12 @@ public class CreateBuildings : MonoBehaviour
     public void SetHijackerOnTrue()
     {
         isHijackerButtonClicked = true;
+        isBuildingButtonClicked = true;
+    }
+
+    public void SetEngineOnTrue()
+    {
+        isEngineButtonClicked = true;
         isBuildingButtonClicked = true;
     }
 
