@@ -5,6 +5,7 @@ using UnityEngine;
 public class GuideMissileAI : MonoBehaviour {
 
     private bool isDetouring = false;
+    private Vector3 direction;
 
 	// Use this for initialization
 	void Start () {
@@ -20,7 +21,6 @@ public class GuideMissileAI : MonoBehaviour {
     {
         float allowance = 3;
         Vector3 upward = go.transform.up;
-        Rigidbody rb = go.GetComponent<Rigidbody>();
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position, upward, out hit, rb.velocity.magnitude * allowance))
@@ -29,7 +29,7 @@ public class GuideMissileAI : MonoBehaviour {
             {
                 isDetouring = true;
                 Debug.Log(go.transform.name + " is detouring because of " + hit.transform.name);
-                rb.velocity = rb.velocity.magnitude * Vector3.Cross(hit.transform.up, go.transform.position - hit.transform.position);
+                direction = Vector3.Cross(hit.transform.up, go.transform.position - hit.transform.position);
             }
         }
     }
@@ -37,5 +37,10 @@ public class GuideMissileAI : MonoBehaviour {
     public bool GetIsDetouring()
     {
         return isDetouring; //to take control of other script's decision on velocity
+    }
+
+    public Vector3 GetDirection()
+    {
+        return direction;
     }
 }
