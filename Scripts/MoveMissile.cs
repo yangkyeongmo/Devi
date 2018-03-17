@@ -38,6 +38,7 @@ public class MoveMissile : MonoBehaviour {
         destinationZoneTransform = GameObject.Find("MidPoint" + Random.Range(0, 50)).transform;
         preDestinationZonePosition = (playerPosition + (destinationZoneTransform.position - playerPosition) * 3.5f);
         Debug.Log("Destination of " + gameObject.name + "is " + destinationZoneTransform.name + ", " + (playerPosition - destinationZoneTransform.position));
+        gm.SetTarget(preDestinationZonePosition);
         crossVector = Vector3.Cross(transform.up, playerPosition - destinationZoneTransform.position);
         Debug.Log("CrossVector is " + crossVector);
 
@@ -54,11 +55,8 @@ public class MoveMissile : MonoBehaviour {
         playerPosition = GameObject.FindWithTag("Player").transform.position;
         distanceFromEarth = (transform.position - earth.position).magnitude;
         SetSpeed();
-        if (gm.GetIsDetouring() == false)
-        {
-            SetDirection();
-            rb.velocity = speed * direction;
-        }
+        SetDirection();
+        rb.velocity = speed * direction;
 
         //leave marker to visualize trajectory(for debug)
         GameObject mark = Instantiate(marker, transform);
@@ -72,11 +70,11 @@ public class MoveMissile : MonoBehaviour {
         {
             speed += accelerateRate;
         }
-        else if(distanceFromPlayer > deceleratingRange && speed < maxSpeed)
+        else if(distanceFromPlayer > rb.velocity.magnitude * gm.GetAllowance() && speed < maxSpeed)
         {
             speed += accelerateRate;
         }
-        else if (distanceFromPlayer < deceleratingRange && speed < approachSpeed)
+        else if (distanceFromPlayer < rb.velocity.magnitude * gm.GetAllowance() && speed < approachSpeed)
         {
             speed -= accelerateRate;
         }
@@ -84,43 +82,37 @@ public class MoveMissile : MonoBehaviour {
 
     void SetDirection()
     {
-        if (isDetouringToDestination == false)
+        if (distanceFromEarth < initializingRange)
         {
-            if (distanceFromEarth < initializingRange)
-            {
-                direction = transform.up;
-            }
-
-            else if (distanceFromEarth > initializingRange)
-            {
-
-                if (distanceFromPlayer > deceleratingRange)
-                {
-                    if (direction != (transform.up + (playerPosition - transform.position).normalized * turnModifier).normalized
-                    //direction.x <= (transform.up + (playerPosition - transform.position).normalized * modifier).normalized.x
-                    //&& direction.y <= (transform.up + (playerPosition - transform.position).normalized * modifier).normalized.y
-                    //&& direction.z <= (transform.up + (playerPosition - transform.position).normalized * modifier).normalized.z)
-                    )
-                    {
-                        direction += (playerPosition - transform.position).normalized * turnModifier;
-                    }
-                }
-                else if (distanceFromPlayer < deceleratingRange)
-                {
-                    isDetouringToDestination = true;
-                    transform.parent = GameObject.FindWithTag("Player").transform;
-                }
-            }
+            direction = transform.up;
         }
 
-        else if (isDetouringToDestination)
+        else if (distanceFromEarth > initializingRange)
         {
-            DetourToDestination();
-            if(distanceFromPlayer > deceleratingRange)
+
+            if (distanceFromPlayer > deceleratingRange)
             {
-                isDetouringToDestination = false;
+                if (direction != (transform.up + (playerPosition - transform.position).normalized * turnModifier).normalized
+                //direction.x <= (transform.up + (playerPosition - transform.position).normalized * modifier).normalized.x
+                //&& direction.y <= (transform.up + (playerPosition - transform.position).normalized * modifier).normalized.y
+                //&& direction.z <= (transform.up + (playerPosition - transform.position).normalized * modifier).normalized.z)
+                )
+                {
+                    direction += (playerPosition - transform.position).normalized * turnModifier;
+                }
+            }
+            else if (distanceFromPlayer < deceleratingRange)
+            {
+                isDetouringToDestination = true;
+                transform.parent = GameObject.FindWithTag("Player").transform;
             }
         }
+        /*DetourToDestination();
+        if(distanceFromPlayer > deceleratingRange)
+        {
+            isDetouringToDestination = false;
+        }*/
+        direction += 5 * gm.GetDirection();
         transform.up = direction;
 
         direction = direction.normalized;
@@ -128,7 +120,7 @@ public class MoveMissile : MonoBehaviour {
 
     void DetourToDestination()
     {
-        Debug.Log(isMovingUpward);
+        /*Debug.Log(isMovingUpward);
         preDestinationZonePosition = (playerPosition + (destinationZoneTransform.position - playerPosition) * 3.5f);
         if (isMovingUpward == false)
         {
@@ -169,7 +161,8 @@ public class MoveMissile : MonoBehaviour {
             //{
                 direction = (transform.position - playerPosition).normalized * turnModifier * 2;
             //}
-        }
+        }*/
+
     }
 
     private void OnCollisionEnter(Collision collision)
