@@ -10,9 +10,12 @@ public class MoveMissile : MonoBehaviour {
     public float minSpeed, approachSpeed, maxSpeed;
     public float accelerateRate;
     public float turnModifier;
+    public Vector3 headPosition;
+    public float allowance;
 
     private GuideMissileAI gm;
     private Transform earth;
+    private Transform player;
     private Transform destinationZoneTransform;
     private Vector3 preDestinationZonePosition;
     private Vector3 playerPosition;
@@ -22,16 +25,16 @@ public class MoveMissile : MonoBehaviour {
     private Rigidbody rb;
     private float speed = 0;
     private Vector3 direction;
-    private bool isDetouringToDestination = false;
-    private bool isMovingUpward;
-    private bool isMovingToPlayer;
+    private Vector3 detourDirection;
+
+    private bool isBombarding = false;
 
     private GameObject debugMarker;
 
     // Use this for initialization
     void Start () {
-        gm = GetComponent<GuideMissileAI>();
         earth = GameObject.Find("Earth").transform;
+        player = GameObject.FindWithTag("Player").transform;
 
         playerPosition = GameObject.FindWithTag("Player").transform.position;
         transform.up = (transform.position - earth.position).normalized;
@@ -52,10 +55,17 @@ public class MoveMissile : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        playerPosition = GameObject.FindWithTag("Player").transform.position;
+        playerPosition = player.position;
         distanceFromEarth = (transform.position - earth.position).magnitude;
-        SetSpeed();
-        SetDirection();
+        if ((transform.position - preDestinationZonePosition).magnitude > 8.0f && isBombarding == false)
+        {
+            SetSpeed();
+            SimpleDetourAIByDistance(preDestinationZonePosition);
+            SetDirection();
+        }
+        else if ((transform.position - preDestinationZonePosition).magnitude < 8.0f)
+            Bombard();
+
         rb.velocity = speed * direction;
 
         //leave marker to visualize trajectory(for debug)
@@ -70,11 +80,11 @@ public class MoveMissile : MonoBehaviour {
         {
             speed += accelerateRate;
         }
-        else if(distanceFromPlayer > rb.velocity.magnitude * gm.GetAllowance() && speed < maxSpeed)
+        else if(distanceFromPlayer > rb.velocity.magnitude * allowance && speed < maxSpeed)
         {
             speed += accelerateRate;
         }
-        else if (distanceFromPlayer < rb.velocity.magnitude * gm.GetAllowance() && speed < approachSpeed)
+        else if (distanceFromPlayer < rb.velocity.magnitude * allowance && speed < approachSpeed)
         {
             speed -= accelerateRate;
         }
@@ -89,80 +99,47 @@ public class MoveMissile : MonoBehaviour {
 
         else if (distanceFromEarth > initializingRange)
         {
-
             if (distanceFromPlayer > deceleratingRange)
             {
-                if (direction != (transform.up + (playerPosition - transform.position).normalized * turnModifier).normalized
-                //direction.x <= (transform.up + (playerPosition - transform.position).normalized * modifier).normalized.x
-                //&& direction.y <= (transform.up + (playerPosition - transform.position).normalized * modifier).normalized.y
-                //&& direction.z <= (transform.up + (playerPosition - transform.position).normalized * modifier).normalized.z)
-                )
+                if (direction != (transform.up + (playerPosition - transform.position).normalized * turnModifier).normalized)
                 {
-                    direction += (playerPosition - transform.position).normalized * turnModifier;
+                    direction += (playerPosition - transform.position).normalized * turnModifier; // slowly turn direction
                 }
             }
             else if (distanceFromPlayer < deceleratingRange)
             {
-                isDetouringToDestination = true;
                 transform.parent = GameObject.FindWithTag("Player").transform;
             }
         }
-        /*DetourToDestination();
-        if(distanceFromPlayer > deceleratingRange)
+        if (direction != detourDirection.normalized)
         {
-            isDetouringToDestination = false;
-        }*/
-        direction += 5 * gm.GetDirection();
+            direction += detourDirection * turnModifier; // slowly turn direction
+        }
         transform.up = direction;
 
         direction = direction.normalized;
     }
 
-    void DetourToDestination()
+    void SimpleDetourAIByDistance(Vector3 target)
     {
-        /*Debug.Log(isMovingUpward);
-        preDestinationZonePosition = (playerPosition + (destinationZoneTransform.position - playerPosition) * 3.5f);
-        if (isMovingUpward == false)
+        if (distanceFromPlayer < rb.velocity.magnitude * allowance)
         {
-            if (Mathf.Abs((transform.position.x - preDestinationZonePosition.x)) > 5.0f
-            && Mathf.Abs((transform.position.z - preDestinationZonePosition.z)) > 5.0f)                                               //stage 1
+            if (true) //if (hit == some object it should avoid)
             {
-                if (direction != Vector3.Cross(transform.position - playerPosition, Vector3.up))
-                {
-                    direction += Vector3.Cross(transform.position - playerPosition, Vector3.up).normalized * turnModifier;
-                }
-                Debug.Log("distance stage 1, x: " + Mathf.Abs((transform.position.x - preDestinationZonePosition.x)));
-                Debug.Log("distance stage 1, z: " + Mathf.Abs((transform.position.z - preDestinationZonePosition.z)));
-            }
-            else if (Mathf.Abs((transform.position.x - preDestinationZonePosition.x)) < 5.0f                                               //stage 2
-                && Mathf.Abs((transform.position.z - preDestinationZonePosition.z)) < 5.0f)
-            {
-                isMovingUpward = true;
+                detourDirection = Vector3.Cross(player.transform.up, transform.position - player.transform.position).normalized;
+                detourDirection += ((target.y - transform.position.y) * Vector3.up).normalized;
+                detourDirection = detourDirection.normalized;
             }
         }
+        else detourDirection = Vector3.zero;
+    }
 
-        else if (isMovingUpward == true && isMovingToPlayer == false)
-        {
-            if ((transform.position - preDestinationZonePosition).magnitude > 2.0f)
-            {
-                direction += Vector3.up * turnModifier;
-                Debug.Log("Direction: " + direction);
-            }
-            else if ((transform.position - preDestinationZonePosition).magnitude < 2.0f)
-            {
-                Debug.Log("Move To Player");
-                isMovingToPlayer = true;
-            }
-        }
-
-        else if (isMovingToPlayer)
-        {
-            //if (transform.up != (playerPosition - transform.position))                                                                                   //turn toward destination
-            //{
-                direction = (transform.position - playerPosition).normalized * turnModifier * 2;
-            //}
-        }*/
-
+    void Bombard()
+    {
+        isBombarding = true;
+        direction = (player.position - transform.position).normalized;
+        transform.up = direction;
+        speed = maxSpeed * 2;
     }
 
     private void OnCollisionEnter(Collision collision)
