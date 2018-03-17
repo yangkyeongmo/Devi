@@ -13,7 +13,6 @@ public class MoveMissile : MonoBehaviour {
     public Vector3 headPosition;
     public float allowance;
 
-    private GuideMissileAI gm;
     private Transform earth;
     private Transform player;
     private Transform destinationZoneTransform;
@@ -26,6 +25,7 @@ public class MoveMissile : MonoBehaviour {
     private float speed = 0;
     private Vector3 direction;
     private Vector3 detourDirection;
+    private LineRenderer lr;
 
     private bool isBombarding = false;
 
@@ -39,9 +39,8 @@ public class MoveMissile : MonoBehaviour {
         playerPosition = GameObject.FindWithTag("Player").transform.position;
         transform.up = (transform.position - earth.position).normalized;
         destinationZoneTransform = GameObject.Find("MidPoint" + Random.Range(0, 50)).transform;
-        preDestinationZonePosition = (playerPosition + (destinationZoneTransform.position - playerPosition) * 3.5f);
         Debug.Log("Destination of " + gameObject.name + "is " + destinationZoneTransform.name + ", " + (playerPosition - destinationZoneTransform.position));
-        gm.SetTarget(preDestinationZonePosition);
+        preDestinationZonePosition = (playerPosition + (destinationZoneTransform.position - playerPosition) * 3.5f);
         crossVector = Vector3.Cross(transform.up, playerPosition - destinationZoneTransform.position);
         Debug.Log("CrossVector is " + crossVector);
 
@@ -50,11 +49,14 @@ public class MoveMissile : MonoBehaviour {
         //For Debug
         debugMarker = GameObject.Instantiate(marker, preDestinationZonePosition, Quaternion.identity);
         debugMarker.transform.parent = GameObject.FindWithTag("Player").transform;
-	}
+
+        lr = GetComponent<LineRenderer>();
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
+        preDestinationZonePosition = (playerPosition + (destinationZoneTransform.position - playerPosition) * 3.5f);
         playerPosition = player.position;
         distanceFromEarth = (transform.position - earth.position).magnitude;
         if ((transform.position - preDestinationZonePosition).magnitude > 8.0f && isBombarding == false)
@@ -71,6 +73,10 @@ public class MoveMissile : MonoBehaviour {
         //leave marker to visualize trajectory(for debug)
         GameObject mark = Instantiate(marker, transform);
         mark.transform.parent = GameObject.Find("StaticParent").transform;
+
+        //use line to see where's its destination(for debug)
+        lr.SetPosition(0, transform.position + transform.up * 2);
+        lr.SetPosition(1, preDestinationZonePosition);
     }
 
     void SetSpeed()
@@ -90,6 +96,24 @@ public class MoveMissile : MonoBehaviour {
         }
     }
 
+    void SimpleDetourAIByDistance(Vector3 target)
+    {
+        if (distanceFromPlayer < rb.velocity.magnitude * allowance)
+        {
+            if (true) //if (hit == some object it should avoid)
+            {
+                detourDirection = Vector3.Cross(player.transform.up, transform.position - player.transform.position).normalized;
+                if(Mathf.Abs(target.y - transform.position.y) < 1)
+                {
+                    detourDirection += ((target.y - transform.position.y) * Vector3.up).normalized;
+                }
+                detourDirection = detourDirection.normalized;
+                
+            }
+        }
+        else detourDirection = Vector3.zero;
+    }
+
     void SetDirection()
     {
         if (distanceFromEarth < initializingRange)
@@ -99,39 +123,32 @@ public class MoveMissile : MonoBehaviour {
 
         else if (distanceFromEarth > initializingRange)
         {
-            if (distanceFromPlayer > deceleratingRange)
+            if (distanceFromPlayer > rb.velocity.magnitude * allowance)
             {
-                if (direction != (transform.up + (playerPosition - transform.position).normalized * turnModifier).normalized)
+                if (direction != (transform.up + (preDestinationZonePosition - transform.position).normalized * turnModifier).normalized)
                 {
-                    direction += (playerPosition - transform.position).normalized * turnModifier; // slowly turn direction
+                    direction += (preDestinationZonePosition - transform.position).normalized * turnModifier; // slowly turn direction
                 }
             }
-            else if (distanceFromPlayer < deceleratingRange)
-            {
-                transform.parent = GameObject.FindWithTag("Player").transform;
-            }
         }
-        if (direction != detourDirection.normalized)
+
+        transform.up = direction;
+
+        /*
+         if (direction != (transform.up + 0.5f * detourDirection.normalized).normalized)
         {
             direction += detourDirection * turnModifier; // slowly turn direction
         }
+        */
+
+        if (direction != transform.up + detourDirection * 10 / (transform.position - preDestinationZonePosition).magnitude)
+        {
+            direction += detourDirection * 10 / (transform.position - preDestinationZonePosition).magnitude * turnModifier;
+        }
+
         transform.up = direction;
 
         direction = direction.normalized;
-    }
-
-    void SimpleDetourAIByDistance(Vector3 target)
-    {
-        if (distanceFromPlayer < rb.velocity.magnitude * allowance)
-        {
-            if (true) //if (hit == some object it should avoid)
-            {
-                detourDirection = Vector3.Cross(player.transform.up, transform.position - player.transform.position).normalized;
-                detourDirection += ((target.y - transform.position.y) * Vector3.up).normalized;
-                detourDirection = detourDirection.normalized;
-            }
-        }
-        else detourDirection = Vector3.zero;
     }
 
     void Bombard()
@@ -150,5 +167,10 @@ public class MoveMissile : MonoBehaviour {
             Rigidbody rb = collision.rigidbody;
             rb.mass -= destructionRate;
         }
+    }
+
+    private void OnDestroy()
+    {
+        Destroy(debugMarker);
     }
 }
