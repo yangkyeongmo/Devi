@@ -68,26 +68,17 @@ public class MoveMissile : MonoBehaviour {
     void SetSpeed()
     {
         distanceFromPlayer = (transform.position - playerPosition).magnitude;
-        if(distanceFromEarth < initializingRange)
+        if(distanceFromEarth < initializingRange && speed < minSpeed)
         {
-            if(speed < minSpeed)
-            {
-                speed += accelerateRate;
-            }
+            speed += accelerateRate;
         }
-        else if(distanceFromPlayer > deceleratingRange)
+        else if(distanceFromPlayer > deceleratingRange && speed < maxSpeed)
         {
-            if(speed < maxSpeed)
-            {
-                speed += accelerateRate;
-            }
+            speed += accelerateRate;
         }
-        else if (distanceFromPlayer < deceleratingRange)
+        else if (distanceFromPlayer < deceleratingRange && speed < approachSpeed)
         {
-            if (speed < approachSpeed)
-            {
-                speed -= accelerateRate;
-            }
+            speed -= accelerateRate;
         }
     }
 
